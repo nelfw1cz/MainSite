@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 Шпаргалки по Python | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">📋 Шпаргалки по Python</h1>
+            <p class="page-subtitle">Быстрый справочник по синтаксису и функциям Python</p>
+        </div>
+    </section>
+
+    <!-- Поиск -->
+    <section class="cheatsheet-search-section">
+        <div class="container">
+            <div class="search-box large">
+                <input type="text" id="cheatsheetSearch" placeholder="Поиск по шпаргалкам...">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Категории шпаргалок -->
+    <section class="cheatsheet-section">
+        <div class="container">
+            <div class="cheatsheet-grid" id="cheatsheetGrid">
+                <!-- Основы -->
+                <div class="cheatsheet-card" data-category="basics">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">🔰</span>
+                        <h3>Основы Python</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Переменные</h4>
+                            <pre><code>x = 5
+name = "Alex"
+pi = 3.14</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Типы данных</h4>
+                            <pre><code>int()      # Целое
+float()    # Дробное
+str()      # Строка
+bool()     # Логическое
+list()     # Список
+dict()     # Словарь
+tuple()    # Кортеж
+set()      # Множество</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Операторы</h4>
+                            <pre><code>+  -  *  /       # Арифметика
+//  %  **      # Деление, остаток, степень
+==  !=  <  >   # Сравнение
+and  or  not   # Логические</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Строки -->
+                <div class="cheatsheet-card" data-category="strings">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">📝</span>
+                        <h3>Строки</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Создание</h4>
+                            <pre><code>s = "Hello"
+s = 'World'
+s = """Multi
+line"""</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Методы</h4>
+                            <pre><code>s.lower()       # В нижний регистр
+s.upper()       # В верхний регистр
+s.strip()       # Убрать пробелы
+s.replace(a,b)  # Заменить
+s.split(',')    # Разделить
+s.join(list)    # Соединить
+s.find(sub)     # Найти
+s.startswith()  # Начинается с
+s.endswith()    # Заканчивается</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Форматирование</h4>
+                            <pre><code>f"Hello {name}"
+"{} {}".format(a, b)
+"%s %d" % (str, num)</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Срезы</h4>
+                            <pre><code>s[0]      # Первый символ
+s[-1]     # Последний
+s[1:4]    # С 1 по 3
+s[:3]     # Первые 3
+s[2:]     # С 2 до конца
+s[::-1]   # Развернуть</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Списки -->
+                <div class="cheatsheet-card" data-category="lists">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">📦</span>
+                        <h3>Списки</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Создание</h4>
+                            <pre><code>lst = [1, 2, 3]
+lst = list()</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Добавление</h4>
+                            <pre><code>lst.append(x)     # В конец
+lst.insert(i, x)  # По индексу
+lst.extend(lst2)  # Добавить список</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Удаление</h4>
+                            <pre><code>lst.remove(x)     # По значению
+lst.pop(i)        # По индексу
+del lst[i]        # Удалить элемент
+lst.clear()       # Очистить</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Методы</h4>
+                            <pre><code>lst.index(x)      # Индекс элемента
+lst.count(x)      # Количество
+lst.sort()        # Сортировать
+lst.reverse()     # Развернуть
+len(lst)          # Длина</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>List Comprehension</h4>
+                            <pre><code>[x**2 for x in range(10)]
+[x for x in lst if x > 0]
+[a+b for a in l1 for b in l2]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Словари -->
+                <div class="cheatsheet-card" data-category="dicts">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">🗂️</span>
+                        <h3>Словари</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Создание</h4>
+                            <pre><code>d = {"key": "value"}
+d = dict(key=value)
+d = {k: v for k, v in items}</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Доступ</h4>
+                            <pre><code>d["key"]        # Получить
+d.get("key")    # Получить (без ошибки)
+d.get("k", def) # Со значением по умолчанию</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Методы</h4>
+                            <pre><code>d.keys()        # Ключи
+d.values()      # Значения
+d.items()       # Пары ключ-значение
+d.update(d2)    # Обновить
+d.pop("key")    # Удалить по ключу
+d.clear()       # Очистить</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Функции -->
+                <div class="cheatsheet-card" data-category="functions">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">⚙️</span>
+                        <h3>Функции</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Объявление</h4>
+                            <pre><code>def func(arg1, arg2):
+    """Docstring"""
+    return result</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Аргументы</h4>
+                            <pre><code>def f(a, b=10)         # По умолчанию
+def f(*args)         # Позиционные
+def f(**kwargs)      # Именованные
+def f(a, *args, **k) # Комбо</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Lambda</h4>
+                            <pre><code>lambda x: x + 1
+lambda x, y: x + y
+sorted(lst, key=lambda x: x[1])</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Декораторы</h4>
+                            <pre><code>@decorator
+def func():
+    pass
+
+def deco(func):
+    def wrapper():
+        func()
+    return wrapper</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Циклы и условия -->
+                <div class="cheatsheet-card" data-category="control">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">🔁</span>
+                        <h3>Циклы и условия</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>if-elif-else</h4>
+                            <pre><code>if x > 0:
+    print("Positive")
+elif x < 0:
+    print("Negative")
+else:
+    print("Zero")</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>for</h4>
+                            <pre><code>for i in range(5):
+    print(i)
+
+for i, v in enumerate(lst):
+    print(i, v)
+
+for k, v in d.items():
+    print(k, v)</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>while</h4>
+                            <pre><code>while x < 10:
+    x += 1
+    if x == 5:
+        continue  # Пропустить
+    if x == 8:
+        break     # Выйти</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Файлы -->
+                <div class="cheatsheet-card" data-category="files">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">📄</span>
+                        <h3>Файлы</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Чтение</h4>
+                            <pre><code>with open('file.txt', 'r') as f:
+    content = f.read()      # Всё
+    lines = f.readlines()   # Список строк
+    for line in f:          # По строкам
+        print(line)</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Запись</h4>
+                            <pre><code>with open('out.txt', 'w') as f:
+    f.write("Hello")
+    f.writelines(lines)</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Режимы</h4>
+                            <pre><code>'r'  # Чтение
+'w'  # Запись (перезаписать)
+'a'  # Добавление
+'b'  # Бинарный
+'+'  # Чтение и запись</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ООП -->
+                <div class="cheatsheet-card" data-category="oop">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">🏗️</span>
+                        <h3>ООП</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Класс</h4>
+                            <pre><code>class MyClass:
+    def __init__(self, name):
+        self.name = name
+    
+    def greet(self):
+        return f"Hi, {self.name}"</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Наследование</h4>
+                            <pre><code>class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        # Parent.__init__(self)</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Декораторы</h4>
+                            <pre><code>@staticmethod
+def static_method():
+    pass
+
+@property
+def name(self):
+    return self._name</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Приватность</h4>
+                            <pre><code>self.public      # Публичный
+self._protected  # Защищённый
+self.__private   # Приватный</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Исключения -->
+                <div class="cheatsheet-card" data-category="exceptions">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">⚠️</span>
+                        <h3>Исключения</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>try-except</h4>
+                            <pre><code>try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Error!")
+except (TypeError, ValueError):
+    print("Other error")
+except Exception as e:
+    print(f"Any error: {e}")
+finally:
+    print("Always")</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>raise</h4>
+                            <pre><code>raise ValueError("Error msg")
+raise  # Перевыбросить</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Типы исключений</h4>
+                            <pre><code>ValueError      # Неправильное значение
+TypeError       # Неправильный тип
+IndexError      # Выход за границы
+KeyError        # Ключ не найден
+FileNotFoundError  # Файл не найден</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Модули -->
+                <div class="cheatsheet-card" data-category="modules">
+                    <div class="cheatsheet-header">
+                        <span class="cheatsheet-icon">📦</span>
+                        <h3>Модули</h3>
+                    </div>
+                    <div class="cheatsheet-content">
+                        <div class="cheat-item">
+                            <h4>Импорт</h4>
+                            <pre><code>import module
+from module import func
+import module as m
+from module import *
+from mod import f as g</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Популярные</h4>
+                            <pre><code>import math
+import random
+import datetime
+import json
+import re
+import os
+import sys</code></pre>
+                        </div>
+                        <div class="cheat-item">
+                            <h4>Создание</h4>
+                            <pre><code># mymodule.py
+def hello():
+    return "Hi"
+
+# main.py
+from mymodule import hello</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="cheatsheet.html">Шпаргалки</a></li>
+                        <li><a href="quiz.html">Квиз</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="guestbook.html">Гостевая книга</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="cheatsheet.js"></script>
+</body>
+</html>

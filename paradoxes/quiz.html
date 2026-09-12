@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Квиз о парадоксах | Проверьте знания</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(210, 75%, 95%)',
+              100: 'hsl(210, 75%, 85%)',
+              200: 'hsl(210, 75%, 75%)',
+              300: 'hsl(210, 75%, 65%)',
+              400: 'hsl(210, 75%, 55%)',
+              500: 'hsl(210, 75%, 40%)',
+              600: 'hsl(210, 75%, 35%)',
+              700: 'hsl(210, 75%, 25%)',
+              800: 'hsl(210, 75%, 15%)',
+              900: 'hsl(210, 75%, 10%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark');
+      }
+    });
+  </script>
+</head>
+<body class="transition-colors duration-300 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100" x-data="quizApp()">
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-200 dark:border-primary-800">
+    <nav class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <a href="index.html" class="text-xl font-bold text-primary-700 dark:text-primary-300 hover:text-primary-800 transition">← Назад</a>
+          <h1 class="text-xl font-bold text-primary-600 dark:text-primary-300">Квиз о парадоксах</h1>
+        </div>
+        <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+          <i data-lucide="sun" id="sunIcon" class="w-5 h-5"></i>
+          <i data-lucide="moon" id="moonIcon" class="w-5 h-5" style="display:none;"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="min-h-screen pt-24 pb-12">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Quiz Container -->
+      <div x-show="!quizCompleted">
+        <!-- Progress -->
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Вопрос <span x-text="currentQuestion + 1"></span> из <span x-text="questions.length"></span></h2>
+            <span class="text-sm text-gray-600 dark:text-gray-400" x-text="Math.round((currentQuestion + 1) / questions.length * 100) + '%'"></span>
+          </div>
+          <div class="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2">
+            <div class="bg-primary-600 dark:bg-primary-400 h-2 rounded-full transition-all duration-300" :style="`width: ${(currentQuestion + 1) / questions.length * 100}%`"></div>
+          </div>
+        </div>
+
+        <!-- Question -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-8 border border-gray-200 dark:border-gray-700 mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6" x-text="questions[currentQuestion].question"></h3>
+          
+          <!-- Options -->
+          <div class="space-y-3">
+            <template x-for="(option, index) in questions[currentQuestion].options" :key="index">
+              <button 
+                @click="selectAnswer(index)"
+                :class="{
+                  'bg-primary-100 dark:bg-primary-900/30 border-primary-500 dark:border-primary-600': selectedAnswer === index,
+                  'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500': selectedAnswer !== index
+                }"
+                class="w-full text-left p-4 rounded-lg border-2 transition-all"
+              >
+                <div class="flex items-start space-x-3">
+                  <div :class="{
+                    'bg-primary-600 dark:bg-primary-500': selectedAnswer === index,
+                    'bg-gray-400 dark:bg-gray-600': selectedAnswer !== index
+                  }" class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span :class="{
+                      'text-white': selectedAnswer === index,
+                      'text-gray-100': selectedAnswer !== index
+                    }" class="text-sm font-semibold" x-text="String.fromCharCode(65 + index)"></span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-gray-900 dark:text-gray-100 font-medium" x-text="option"></p>
+                  </div>
+                </div>
+              </button>
+            </template>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between">
+          <button 
+            @click="previousQuestion()"
+            :disabled="currentQuestion === 0"
+            :class="{'opacity-50 cursor-not-allowed': currentQuestion === 0}"
+            class="px-6 py-3 bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-600 transition disabled:hover:bg-gray-300 dark:disabled:hover:bg-gray-700"
+          >
+            ← Предыдущий
+          </button>
+          
+          <button 
+            @click="selectedAnswer === null ? submitAnswer() : nextQuestion()"
+            :disabled="selectedAnswer === null"
+            :class="{'opacity-50 cursor-not-allowed': selectedAnswer === null}"
+            class="px-6 py-3 bg-primary-600 dark:bg-primary-700 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition disabled:hover:bg-primary-600 dark:disabled:hover:bg-primary-700"
+            x-text="currentQuestion === questions.length - 1 ? 'Завершить' : 'Далее →'"
+          >
+          </button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div x-show="quizCompleted" class="bg-white dark:bg-gray-800 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
+        <div class="text-center mb-8">
+          <div class="text-6xl font-bold text-primary-600 dark:text-primary-400 mb-4" x-text="`${score}/${questions.length}`"></div>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Ваш результат</h2>
+          <p class="text-lg text-gray-700 dark:text-gray-300" x-text="`${getResultMessage()}`"></p>
+        </div>
+
+        <!-- Performance -->
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <div class="text-center p-4 bg-green-100 dark:bg-green-900/30 rounded-lg">
+            <p class="text-2xl font-bold text-green-700 dark:text-green-300" x-text="`${correctAnswers}`"></p>
+            <p class="text-sm text-green-600 dark:text-green-400">Правильно</p>
+          </div>
+          <div class="text-center p-4 bg-red-100 dark:bg-red-900/30 rounded-lg">
+            <p class="text-2xl font-bold text-red-700 dark:text-red-300" x-text="`${questions.length - correctAnswers}`"></p>
+            <p class="text-sm text-red-600 dark:text-red-400">Неправильно</p>
+          </div>
+          <div class="text-center p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+            <p class="text-2xl font-bold text-blue-700 dark:text-blue-300" x-text="`${Math.round(score / questions.length * 100)}%`"></p>
+            <p class="text-sm text-blue-600 dark:text-blue-400">Процент</p>
+          </div>
+        </div>
+
+        <!-- Review -->
+        <div class="border-t border-gray-200 dark:border-gray-700 pt-8">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">Объяснения</h3>
+          <div class="space-y-6">
+            <template x-for="(question, index) in questions" :key="index">
+              <div class="pb-6 border-b border-gray-200 dark:border-gray-700 last:border-0">
+                <div class="flex items-start space-x-3 mb-3">
+                  <div :class="{
+                    'bg-green-600': userAnswers[index] === question.correct,
+                    'bg-red-600': userAnswers[index] !== question.correct
+                  }" class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i :class="{
+                      'lucide': userAnswers[index] === question.correct,
+                    }" :data-lucide="userAnswers[index] === question.correct ? 'check' : 'x'" class="text-white w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-gray-900 dark:text-gray-100" x-text="`Вопрос ${index + 1}: ${question.question}`"></p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" x-text="`Ваш ответ: ${question.options[userAnswers[index]]}`"></p>
+                    <p class="text-sm" :class="{
+                      'text-green-600 dark:text-green-400': userAnswers[index] === question.correct,
+                      'text-red-600 dark:text-red-400': userAnswers[index] !== question.correct
+                    }" x-text="`${userAnswers[index] === question.correct ? '✓ Правильно' : '✗ Неправильно'}: ${question.options[question.correct]}`"></p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2" x-text="`${question.explanation}`"></p>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+          <a href="index.html" class="px-6 py-3 bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-600 transition text-center">На главную</a>
+          <button @click="resetQuiz()" class="px-6 py-3 bg-primary-600 dark:bg-primary-700 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition">Пройти заново</button>
+          <a href="cheatsheet.html" class="px-6 py-3 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition text-center">Чит-лист</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function quizApp() {
+      return {
+        questions: [
+          {
+            question: "Что такое парадокс Лжеца?",
+            options: [
+              "Утверждение 'Это предложение ложно'",
+              "История о человеке, который не говорит правду",
+              "Логическая ошибка в аргументации",
+              "Книга о философии 19 века"
+            ],
+            correct: 0,
+            explanation: "Парадокс Лжеца — это самореферентное утверждение, которое создаёт логическое противоречие. Если оно правда, то оно ложно; если оно ложно, то оно правда."
+          },
+          {
+            question: "Кто сформулировал парадокс Рассела?",
+            options: [
+              "Аристотель",
+              "Бертран Рассел",
+              "Людвиг Витгенштейн",
+              "Альфред Тарский"
+            ],
+            correct: 1,
+            explanation: "Бертран Рассел открыл парадокс, связанный с множеством всех множеств, которые не содержат себя в качестве элемента."
+          },
+          {
+            question: "Парадокс Зенона Дихотомии рассматривает...",
+            options: [
+              "Вопрос о времени и движении",
+              "Проблему определения множеств",
+              "Философию языка",
+              "Природу сознания"
+            ],
+            correct: 0,
+            explanation: "Парадокс Дихотомии Зенона утверждает, что для попадания из точки А в точку Б необходимо пересечь бесконечное число промежуточных точек."
+          },
+          {
+            question: "Какой из этих парадоксов является физическим?",
+            options: [
+              "Парадокс Берри",
+              "Парадокс Рассела",
+              "Парадокс Ахилла и черепахи",
+              "Парадокс Цоллы"
+            ],
+            correct: 2,
+            explanation: "Парадокс Ахилла и черепахи — это физический парадокс Зенона о движении. Остальные — логические или семантические парадоксы."
+          },
+          {
+            question: "Парадокс Сория связан с...",
+            options: [
+              "Определением нечётких понятий (куча песка)",
+              "Природой истины",
+              "Наборами чисел",
+              "Путешествиями во времени"
+            ],
+            correct: 0,
+            explanation: "Парадокс Сория (древний парадокс кучи) исследует граничные случаи нечётких понятий: в каком момент кучи песка перестаёт существовать куча?"
+          },
+          {
+            question: "Какой парадокс связан с путешествиями во времени?",
+            options: [
+              "Парадокс книги",
+              "Парадокс деда",
+              "Парадокс невозможности",
+              "Парадокс видимости"
+            ],
+            correct: 1,
+            explanation: "Парадокс деда: если я убью своего деда до рождения моего отца, то я не смогу родиться, следовательно, не смогу убить деда — логическое противоречие."
+          },
+          {
+            question: "Как называется решение парадокса Лжеца через иерархию языков?",
+            options: [
+              "Теория типов",
+              "Метаязык",
+              "Уровни абстракции",
+              "Все вышеперечисленные"
+            ],
+            correct: 3,
+            explanation: "Теория типов Рассела предлагает разделить язык на уровни (объектный язык и метаязык), предотвращая самоссылающиеся высказывания."
+          },
+          {
+            question: "Какой парадокс порождает вопрос 'Можно ли завершить бесконечное число задач за конечное время?'",
+            options: [
+              "Парадокс Ахилла",
+              "Парадокс суперзадачи",
+              "Парадокс Сория",
+              "Парадокс Берри"
+            ],
+            correct: 1,
+            explanation: "Парадокс суперзадачи задаёт вопрос о возможности выполнения бесконечной последовательности действий в конечный промежуток времени."
+          }
+        ],
+        currentQuestion: 0,
+        selectedAnswer: null,
+        userAnswers: [],
+        score: 0,
+        correctAnswers: 0,
+        quizCompleted: false,
+        
+        selectAnswer(index) {
+          this.selectedAnswer = index;
+        },
+        
+        submitAnswer() {
+          if (this.selectedAnswer !== null) {
+            this.userAnswers[this.currentQuestion] = this.selectedAnswer;
+            if (this.selectedAnswer === this.questions[this.currentQuestion].correct) {
+              this.score++;
+              this.correctAnswers++;
+            }
+            this.nextQuestion();
+          }
+        },
+        
+        nextQuestion() {
+          if (this.currentQuestion < this.questions.length - 1) {
+            this.currentQuestion++;
+            this.selectedAnswer = null;
+          } else {
+            this.quizCompleted = true;
+          }
+        },
+        
+        previousQuestion() {
+          if (this.currentQuestion > 0) {
+            this.currentQuestion--;
+            this.selectedAnswer = this.userAnswers[this.currentQuestion] ?? null;
+          }
+        },
+        
+        resetQuiz() {
+          this.currentQuestion = 0;
+          this.selectedAnswer = null;
+          this.userAnswers = [];
+          this.score = 0;
+          this.correctAnswers = 0;
+          this.quizCompleted = false;
+        },
+        
+        getResultMessage() {
+          const percentage = (this.score / this.questions.length) * 100;
+          if (percentage === 100) return "Идеально! Вы мастер парадоксов! 🎯";
+          if (percentage >= 80) return "Отлично! Вы хорошо разбираетесь в парадоксах! 🌟";
+          if (percentage >= 60) return "Хорошо! Вы многое знаете о парадоксах. 👏";
+          if (percentage >= 40) return "Неплохо! Пора подтянуть знания. 📚";
+          return "Не расстраивайтесь! Изучите чит-лист и попробуйте ещё раз. 💪";
+        }
+      }
+    }
+    
+    lucide.createIcons();
+  </script>
+</body>
+</html>

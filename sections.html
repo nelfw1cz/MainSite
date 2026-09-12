@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Разделы | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">📚 Разделы сайта</h1>
+            <p class="page-subtitle">Все возможности и разделы PythonPath в одном месте</p>
+        </div>
+    </section>
+
+    <!-- Основные разделы -->
+    <section class="sections-main">
+        <div class="container">
+            <h2 class="section-title">🎓 Обучение</h2>
+            <div class="sections-grid">
+                <a href="tasks.html" class="section-card main-card">
+                    <span class="section-icon">📝</span>
+                    <h3>Задачи</h3>
+                    <p>Решение задач по Python с подробными объяснениями</p>
+                    <span class="section-link">Перейти →</span>
+                </a>
+                <a href="progress.html" class="section-card main-card">
+                    <span class="section-icon">📊</span>
+                    <h3>Прогресс</h3>
+                    <p>Статистика обучения, достижения и активность</p>
+                    <span class="section-link">Перейти →</span>
+                </a>
+                <a href="quiz.html" class="section-card main-card">
+                    <span class="section-icon">🧠</span>
+                    <h3>Квиз</h3>
+                    <p>Тесты по Python для проверки знаний</p>
+                    <span class="section-link">Перейти →</span>
+                </a>
+                <a href="cheatsheet.html" class="section-card main-card">
+                    <span class="section-icon">📋</span>
+                    <h3>Шпаргалки</h3>
+                    <p>Быстрый справочник по синтаксису Python</p>
+                    <span class="section-link">Перейти →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections-main">
+        <div class="container">
+            <h2 class="section-title">📖 Контент</h2>
+            <div class="sections-grid">
+                <a href="blog.html" class="section-card content-card">
+                    <span class="section-icon">📝</span>
+                    <h3>Блог</h3>
+                    <p>Статьи о изучении Python, конспекты и заметки</p>
+                    <span class="section-link">Читать →</span>
+                </a>
+                <a href="about.html" class="section-card content-card">
+                    <span class="section-icon">👨‍💻</span>
+                    <h3>О себе</h3>
+                    <p>Информация об авторе, путь обучения, цели</p>
+                    <span class="section-link">Узнать →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections-main">
+        <div class="container">
+            <h2 class="section-title">🎮 Развлечения</h2>
+            <div class="sections-grid">
+                <a href="game.html" class="section-card fun-card">
+                    <span class="section-icon">🌲</span>
+                    <h3>Прогулка по лесу</h3>
+                    <p>Исследуй лес, находи объекты, отдыхай</p>
+                    <span class="section-link">Играть →</span>
+                </a>
+                <a href="guestbook.html" class="section-card fun-card">
+                    <span class="section-icon">📖</span>
+                    <h3>Гостевая книга</h3>
+                    <p>Оставь сообщение или почитай других</p>
+                    <span class="section-link">Написать →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections-main">
+        <div class="container">
+            <h2 class="section-title">⚙️ Управление</h2>
+            <div class="sections-grid">
+                <a href="admin.html" class="section-card admin-card">
+                    <span class="section-icon">⚙️</span>
+                    <h3>Админ-панель</h3>
+                    <p>Добавление и управление задачами</p>
+                    <span class="section-link">Открыть →</span>
+                </a>
+                <a href="profile.html" class="section-card admin-card">
+                    <span class="section-icon">👤</span>
+                    <h3>Профиль</h3>
+                    <p>Настройки аккаунта и личная информация</p>
+                    <span class="section-link">Открыть →</span>
+                </a>
+                <a href="contacts.html" class="section-card admin-card">
+                    <span class="section-icon">📬</span>
+                    <h3>Контакты</h3>
+                    <p>Связаться со мной, форма обратной связи</p>
+                    <span class="section-link">Написать →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Быстрые действия -->
+    <section class="quick-actions-section">
+        <div class="container">
+            <h2 class="section-title">⚡ Быстрые действия</h2>
+            <div class="quick-actions-grid">
+                <button class="quick-action-btn" onclick="window.location.href='quiz.html'">
+                    <span class="quick-icon">🎯</span>
+                    <span>Случайный квиз</span>
+                </button>
+                <button class="quick-action-btn" onclick="window.location.href='tasks.html'">
+                    <span class="quick-icon">📝</span>
+                    <span>Решить задачу</span>
+                </button>
+                <button class="quick-action-btn" onclick="window.location.href='cheatsheet.html'">
+                    <span class="quick-icon">📋</span>
+                    <span>Открыть шпаргалки</span>
+                </button>
+                <button class="quick-action-btn" onclick="window.location.href='blog.html'">
+                    <span class="quick-icon">✍️</span>
+                    <span>Написать статью</span>
+                </button>
+                <button class="quick-action-btn" onclick="window.location.href='game.html'">
+                    <span class="quick-icon">🎮</span>
+                    <span>Играть</span>
+                </button>
+                <button class="quick-action-btn" onclick="window.location.href='guestbook.html'">
+                    <span class="quick-icon">💬</span>
+                    <span>Оставить отзыв</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Статистика сайта -->
+    <section class="site-stats-section">
+        <div class="container">
+            <h2 class="section-title">📈 Статистика сайта</h2>
+            <div class="site-stats-grid" id="siteStats">
+                <div class="site-stat-card">
+                    <span class="site-stat-icon">📝</span>
+                    <span class="site-stat-value" id="totalTasksStat">0</span>
+                    <span class="site-stat-label">Задач</span>
+                </div>
+                <div class="site-stat-card">
+                    <span class="site-stat-icon">📄</span>
+                    <span class="site-stat-value" id="totalPostsStat">0</span>
+                    <span class="site-stat-label">Статей</span>
+                </div>
+                <div class="site-stat-card">
+                    <span class="site-stat-icon">❓</span>
+                    <span class="site-stat-value" id="totalQuestionsStat">0</span>
+                    <span class="site-stat-label">Вопросов</span>
+                </div>
+                <div class="site-stat-card">
+                    <span class="site-stat-icon">💬</span>
+                    <span class="site-stat-value" id="totalMessagesStat">0</span>
+                    <span class="site-stat-label">Сообщений</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="sections.html">Разделы</a></li>
+                        <li><a href="profile.html">Профиль</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Разделы</h4>
+                    <ul>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="quiz.html">Квиз</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="game.html">Игра</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="sections.js"></script>
+</body>
+</html>

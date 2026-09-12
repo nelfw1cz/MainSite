@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалка по Python | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="sections.html" class="nav-link">📚 Разделы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="sections.html" class="mobile-link">📚 Разделы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+    </div>
+
+    <!-- Герой-секция -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="highlight">Python Шпаргалка</span>
+                <br>Всё необходимое в одном месте
+            </h1>
+            <p class="hero-subtitle">Быстрая справка по синтаксису, методам и встроенным функциям</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <div class="section-content">
+                    <!-- Переключатель категорий -->
+                    <div class="filter-buttons" id="categoryFilter">
+                        <button class="filter-btn active" data-category="all">Все</button>
+                        <button class="filter-btn" data-category="basics">Основы</button>
+                        <button class="filter-btn" data-category="strings">Строки</button>
+                        <button class="filter-btn" data-category="lists">Списки</button>
+                        <button class="filter-btn" data-category="dicts">Словари</button>
+                        <button class="filter-btn" data-category="functions">Функции</button>
+                    </div>
+
+                    <!-- Карточки шпаргалки -->
+                    <div class="cheatsheet-grid">
+                        <!-- Основы -->
+                        <div class="cheatsheet-card" data-category="basics">
+                            <h3>🔢 Типы данных</h3>
+                            <pre><code>
+# Целые числа
+x = 42
+# Числа с плавающей запятой
+y = 3.14
+# Строки
+s = "Hello"
+# Булевы значения
+flag = True
+# Список (массив)
+lst = [1, 2, 3]
+# Кортеж (неизменяемый)
+t = (1, 2, 3)
+# Словарь (хеш)
+d = {"key": "value"}</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="basics">
+                            <h3>➕ Операторы</h3>
+                            <pre><code>
+# Арифметика
+a + b  # Сложение
+a - b  # Вычитание
+a * b  # Умножение
+a / b  # Деление
+a ** b # Степень
+a % b  # Остаток
+
+# Сравнение
+a == b # Равно
+a != b # Не равно
+a > b  # Больше
+a < b  # Меньше
+a >= b # Больше или равно
+a <= b # Меньше или равно</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="basics">
+                            <h3>⚡ Условия</h3>
+                            <pre><code>
+# If-else
+if x > 0:
+    print("Положительное")
+elif x < 0:
+    print("Отрицательное")
+else:
+    print("Ноль")
+
+# Тернарный оператор
+result = "да" if x > 0 else "нет"
+
+# Логические операторы
+if a and b:
+    pass
+if a or b:
+    pass
+if not a:
+    pass</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="basics">
+                            <h3>🔄 Циклы</h3>
+                            <pre><code>
+# For цикл
+for i in range(5):
+    print(i)
+
+# For с перечислением
+for i, val in enumerate(lst):
+    print(i, val)
+
+# While цикл
+while x > 0:
+    x -= 1
+
+# Break и continue
+for i in range(10):
+    if i == 5:
+        break
+    if i == 2:
+        continue
+    print(i)</code></pre>
+                        </div>
+
+                        <!-- Строки -->
+                        <div class="cheatsheet-card" data-category="strings">
+                            <h3>📝 Методы строк</h3>
+                            <pre><code>
+s = "Hello Python"
+
+s.upper()      # "HELLO PYTHON"
+s.lower()      # "hello python"
+s.capitalize() # "Hello python"
+s.replace("a","b") # Замена
+s.split(" ")   # ["Hello", "Python"]
+s.join(["a","b"]) # Объединение
+s.strip()      # Удаляет пробелы
+s.startswith("H") # True
+s.endswith("n")   # True
+s.find("P")    # Индекс P (6)</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="strings">
+                            <h3>🎨 F-strings форматирование</h3>
+                            <pre><code>
+name = "Alice"
+age = 25
+
+# F-string (новый способ)
+print(f"Имя: {name}, Возраст: {age}")
+
+# Выражения в f-strings
+x = 10
+print(f"x + 5 = {x + 5}")
+
+# Форматирование чисел
+pi = 3.14159
+print(f"Pi: {pi:.2f}") # 3.14
+
+# Выравнивание
+print(f"{name:>10}") # Выравн. вправо</code></pre>
+                        </div>
+
+                        <!-- Списки -->
+                        <div class="cheatsheet-card" data-category="lists">
+                            <h3>📊 Методы списков</h3>
+                            <pre><code>
+lst = [1, 2, 3, 4, 5]
+
+ls.append(6)    # [1,2,3,4,5,6]
+lst.insert(0,0) # [0,1,2,3,4,5]
+lst.remove(3)   # Удалить элемент
+lst.pop()       # Удалить последний
+lst.pop(0)      # Удалить по индексу
+lst.sort()      # Сортировать
+lst.reverse()   # Развернуть
+lst.copy()      # Копия списка
+lst.index(3)    # Индекс элемента
+lst.count(2)    # Кол-во элементов</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="lists">
+                            <h3>✂️ Срезы списков</h3>
+                            <pre><code>
+lst = [0, 1, 2, 3, 4, 5, 6, 7]
+
+lst[2]     # 2
+lst[2:5]   # [2, 3, 4]
+lst[:3]    # [0, 1, 2]
+lst[3:]    # [3, 4, 5, 6, 7]
+lst[::2]   # [0, 2, 4, 6] (шаг 2)
+lst[::-1]  # [7, 6, 5, ...] (в обратном)
+lst[-1]    # 7 (последний)
+lst[-2:]   # [6, 7] (последние 2)</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="lists">
+                            <h3>📐 List comprehension</h3>
+                            <pre><code>
+# Создание списка через цикл
+squares = [x**2 for x in range(5)]
+# [0, 1, 4, 9, 16]
+
+# С условием
+evens = [x for x in range(10) if x % 2 == 0]
+# [0, 2, 4, 6, 8]
+
+# Вложенный цикл
+matrix = [[x+y for x in range(3)] 
+          for y in range(3)]
+
+# С преобразованием
+words = ["hello", "world"]
+lengths = [len(w) for w in words]
+# [5, 5]</code></pre>
+                        </div>
+
+                        <!-- Словари -->
+                        <div class="cheatsheet-card" data-category="dicts">
+                            <h3>🗝️ Методы словарей</h3>
+                            <pre><code>
+d = {"name": "Alice", "age": 25}
+
+d["name"]       # "Alice"
+d.get("age")    # 25
+d.get("city", "N/A") # N/A (не существует)
+d.keys()        # dict_keys(['name', 'age'])
+d.values()      # dict_values(['Alice', 25])
+d.items()       # Пары (ключ, значение)
+d.update({"city": "NY"}) # Добавить
+d.pop("age")    # Удалить и вернуть
+d.clear()       # Удалить всё</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="dicts">
+                            <h3>🔁 Итерация по словарю</h3>
+                            <pre><code>
+d = {"a": 1, "b": 2, "c": 3}
+
+# По ключам
+for key in d:
+    print(key)
+
+# По значениям
+for value in d.values():
+    print(value)
+
+# По парам
+for key, value in d.items():
+    print(f"{key}: {value}")
+
+# Comprehension для словаря
+squares = {x: x**2 for x in range(5)}
+# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}</code></pre>
+                        </div>
+
+                        <!-- Функции -->
+                        <div class="cheatsheet-card" data-category="functions">
+                            <h3>⚙️ Определение функций</h3>
+                            <pre><code>
+# Базовая функция
+def greet(name):
+    return f"Hello, {name}!"
+
+# Значения по умолчанию
+def add(a, b=0):
+    return a + b
+
+# Несколько параметров
+def info(name, age, city="Unknown"):
+    return f"{name}, {age}, {city}"
+
+# *args - произвольное кол-во
+def sum_all(*args):
+    return sum(args)
+
+# **kwargs - именованные аргументы
+def print_info(**kwargs):
+    for key, val in kwargs.items():
+        print(f"{key}: {val}")</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="functions">
+                            <h3>🎯 Lambda и встроенные</h3>
+                            <pre><code>
+# Lambda функции (анонимные)
+square = lambda x: x ** 2
+square(5)  # 25
+
+# map() - применить функцию
+nums = [1, 2, 3, 4, 5]
+result = list(map(lambda x: x*2, nums))
+# [2, 4, 6, 8, 10]
+
+# filter() - отфильтровать
+evens = list(filter(lambda x: x%2==0, nums))
+# [2, 4]
+
+# sorted() с ключом
+words = ["apple", "pie", "a"]
+sorted(words, key=len)
+# ["a", "pie", "apple"]</code></pre>
+                        </div>
+
+                        <div class="cheatsheet-card" data-category="functions">
+                            <h3>📦 Декораторы</h3>
+                            <pre><code>
+# Простой декоратор
+def my_decorator(func):
+    def wrapper():
+        print("До")
+        func()
+        print("После")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# Выведет: До, Hello!, После
+
+# С параметрами
+def repeat(n):
+    def decorator(func):
+        def wrapper(*args):
+            for _ in range(n):
+                func(*args)
+        return wrapper
+    return decorator</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Копирование и поиск -->
+        <section class="section">
+            <div class="container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Поиск по шпаргалке...">
+                </div>
+            </div>
+        </section>
+
+        <!-- Подсказка -->
+        <section class="section" style="background: var(--bg-secondary); padding: 30px 0;">
+            <div class="container">
+                <div class="about-card">
+                    <h3>💡 Совет</h3>
+                    <p>Эта шпаргалка охватывает основные конструкции Python. Для каждого элемента попробуйте написать код самостоятельно, чтобы лучше запомнить синтаксис!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4>PythonPath</h4>
+                <p>Ваш путь в мир Python программирования</p>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="tasks.html">Задачи</a></li>
+                    <li><a href="python-cheatsheet.html">Шпаргалка</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PythonPath. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Фильтрация -->
+    <script>
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.cheatsheet-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Обновить активную кнопку
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const category = button.getAttribute('data-category');
+
+                // Показать/скрыть карточки
+                cards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.style.opacity = '1', 10);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+        // Поиск
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.opacity = '1';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Меню и тема
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Загрузить тему при загрузке страницы
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+    </script>
+</body>
+</html>

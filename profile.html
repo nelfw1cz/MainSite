@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">👤 Мой профиль</h1>
+            <p class="page-subtitle">Личная информация и настройки аккаунта</p>
+        </div>
+    </section>
+
+    <!-- Содержимое профиля -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-grid">
+                <!-- Левая колонка - информация -->
+                <div class="profile-sidebar">
+                    <div class="profile-card">
+                        <div class="avatar-container">
+                            <div class="avatar" id="userAvatar">👤</div>
+                            <button class="avatar-edit" id="editAvatar">📷</button>
+                        </div>
+                        <h3 class="profile-name" id="profileName">Гость</h3>
+                        <p class="profile-level" id="profileLevel">Уровень 1</p>
+                        <div class="profile-xp-bar">
+                            <div class="xp-progress" id="xpProgress">
+                                <div class="xp-fill" id="xpFill" style="width: 0%"></div>
+                            </div>
+                            <span class="xp-text" id="xpText">0 / 100 XP</span>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="stat-value" id="profileTasks">0</span>
+                                <span class="stat-label">Задач</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value" id="profileStreak">0</span>
+                                <span class="stat-label">Дней</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value" id="profileRank">Новичок</span>
+                                <span class="stat-label">Ранг</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <h4>🏆 Достижения</h4>
+                        <div class="achievements-mini" id="achievementsMini">
+                            <!-- Достижения будут добавлены через JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка - настройки -->
+                <div class="profile-content">
+                    <!-- Сообщение для гостей -->
+                    <div class="guest-message" id="guestMessage">
+                        <div class="message-icon">🔒</div>
+                        <h3>Войдите для доступа к профилю</h3>
+                        <p>Зарегистрируйтесь или войдите в аккаунт, чтобы управлять своим профилем и отслеживать прогресс.</p>
+                        <button class="btn btn-primary" id="guestLoginBtn">Войти / Регистрация</button>
+                    </div>
+
+                    <!-- Контент для авторизованных -->
+                    <div class="profile-tabs" id="authorizedContent">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" data-tab="personal">Личные данные</button>
+                            <button class="tab-btn" data-tab="settings">Настройки</button>
+                            <button class="tab-btn" data-tab="activity">Активность</button>
+                        </div>
+
+                        <!-- Личные данные -->
+                        <div class="tab-content active" id="personalTab">
+                            <form class="profile-form" id="personalForm">
+                                <div class="form-group">
+                                    <label for="userName">Имя</label>
+                                    <input type="text" id="userName" placeholder="Ваше имя">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userEmail">Email</label>
+                                    <input type="email" id="userEmail" placeholder="your@email.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userBio">О себе</label>
+                                    <textarea id="userBio" rows="4" placeholder="Расскажите о себе..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userLocation">Город</label>
+                                    <input type="text" id="userLocation" placeholder="Ваш город">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
+                            </form>
+                        </div>
+
+                        <!-- Настройки -->
+                        <div class="tab-content" id="settingsTab">
+                            <form class="settings-form" id="settingsForm">
+                                <div class="form-group">
+                                    <label>Тема оформления</label>
+                                    <div class="theme-selector">
+                                        <button type="button" class="theme-option" data-theme="light">
+                                            <span class="theme-preview-dot light"></span>
+                                            Светлая
+                                        </button>
+                                        <button type="button" class="theme-option" data-theme="dark">
+                                            <span class="theme-preview-dot dark"></span>
+                                            Тёмная
+                                        </button>
+                                        <button type="button" class="theme-option" data-theme="blue">
+                                            <span class="theme-preview-dot blue"></span>
+                                            Синяя
+                                        </button>
+                                        <button type="button" class="theme-option" data-theme="green">
+                                            <span class="theme-preview-dot green"></span>
+                                            Зелёная
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="currentPassword">Текущий пароль</label>
+                                    <input type="password" id="currentPassword" placeholder="••••••••">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">Новый пароль</label>
+                                    <input type="password" id="newPassword" placeholder="••••••••">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Обновить пароль</button>
+                            </form>
+                        </div>
+
+                        <!-- Активность -->
+                        <div class="tab-content" id="activityTab">
+                            <div class="activity-list" id="activityList">
+                                <!-- Активность будет добавлена через JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="progress.html">Прогресс</a></li>
+                        <li><a href="about.html">О себе</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="contacts.html">Связаться со мной</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Telegram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

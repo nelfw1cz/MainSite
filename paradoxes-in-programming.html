@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Парадоксы в программировании | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Герой-секция -->
+    <header class="hero" style="padding-top: 60px; padding-bottom: 40px;">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="highlight">Парадоксы в программировании</span>
+                <br>Логика, ошибки и неожиданные решения
+            </h1>
+            <p class="hero-subtitle">Как парадоксы философии проявляют себя в коде и как их решать на Python</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <section class="site-section" style="background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);">
+        <div class="container">
+            <h2 class="section-title">Парадоксы в программировании</h2>
+            
+            <!-- Парадокс 1: Самореференция -->
+            <div class="article-card" style="margin-bottom: 40px;">
+                <h3 style="font-size: 1.8em; color: #667eea; margin-bottom: 15px;">🔄 Парадокс 1: Самореференция</h3>
+                <h4 style="color: #555; margin-top: 20px; margin-bottom: 10px;">Проблема:</h4>
+                <p>Функция или переменная, которая ссылается сама на себя, может привести к бесконечной рекурсии или логическим противоречиям.</p>
+                
+                <div class="code-example" style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 3px solid #667eea;">
+                    <pre><code style="font-family: 'Fira Code', monospace; color: #333;">
+# Проблема: Самореференция
+def is_truth_value(statement):
+    if statement == "Это предложение ложно":
+        return not is_truth_value(statement)  # Бесконечный парадокс!
+
+# Решение: Проверка контекста
+def is_truth_value_safe(statement):
+    if statement == "Это предложение ложно":
+        return None  # Неопределённо
+    return bool(statement)
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- Парадокс 2: Гусь и утка -->
+            <div class="article-card" style="margin-bottom: 40px;">
+                <h3 style="font-size: 1.8em; color: #f093fb; margin-bottom: 15px;">🦆 Парадокс 2: Проблема типизации (Duck Typing)</h3>
+                <h4 style="color: #555; margin-top: 20px; margin-bottom: 10px;">Проблема:</h4>
+                <p>В Python используется 'утиная типизация'—если объект ведёт себя как утка, то он утка. Это может привести к неожиданным ошибкам.</p>
+                
+                <div class="code-example" style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 3px solid #f093fb;">
+                    <pre><code style="font-family: 'Fira Code', monospace; color: #333;">
+# Проблема: Duck Typing парадокс
+class Penguin:
+    def quack(self):
+        return "I can't quack, I'm a penguin!"
+
+def make_it_quack(duck):
+    print(duck.quack())
+
+# Это работает, но логически неправильно!
+penguin = Penguin()
+make_it_quack(penguin)
+
+# Решение: Использование абстрактных базовых классов
+from abc import ABC, abstractmethod
+
+class Duck(ABC):
+    @abstractmethod
+    def quack(self):
+        pass
+
+class RealDuck(Duck):
+    def quack(self):
+        return "Quack!"
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- Парадокс 3: Бесконечность -->
+            <div class="article-card" style="margin-bottom: 40px;">
+                <h3 style="font-size: 1.8em; color: #13c0f1; margin-bottom: 15px;">∞ Парадокс 3: Бесконечные циклы</h3>
+                <h4 style="color: #555; margin-top: 20px; margin-bottom: 10px;">Проблема:</h4>
+                <p>Генераторы и бесконечные итераторы могут создать парадокс времени—программа работает, но никогда не завершается.</p>
+                
+                <div class="code-example" style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 3px solid #13c0f1;">
+                    <pre><code style="font-family: 'Fira Code', monospace; color: #333;">
+# Парадокс: Бесконечный цикл через генератор
+def infinite_loop():
+    n = 0
+    while True:
+        yield n
+        n += 1
+
+# for i in infinite_loop():  # Это никогда не завершится
+#     print(i)
+
+# Решение: Используйте условие выхода
+def safe_loop(max_iterations=100):
+    n = 0
+    while n < max_iterations:
+        yield n
+        n += 1
+
+for i in safe_loop(10):
+    print(i)
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- Парадокс 4: NoneType -->
+            <div class="article-card" style="margin-bottom: 40px;">
+                <h3 style="font-size: 1.8em; color: #e74c3c; margin-bottom: 15px;">❌ Парадокс 4: The Billion-Dollar Mistake (None)</h3>
+                <h4 style="color: #555; margin-top: 20px; margin-bottom: 10px;">Проблема:</h4>
+                <p>None может быть истинным и ложным одновременно в различных контекстах—это вызывает неожиданные ошибки.</p>
+                
+                <div class="code-example" style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 3px solid #e74c3c;">
+                    <pre><code style="font-family: 'Fira Code', monospace; color: #333;">
+# Проблема: Контрастная логика с None
+def get_value():
+    return None
+
+result = get_value()
+
+# Это может быть проблемой
+if result is None or not result:  # Неточно!
+    print("Не имеет значения")
+
+# Решение: Явная проверка типов
+from typing import Optional
+
+def get_value() -> Optional[int]:
+    return None
+
+result = get_value()
+
+if result is None:  # Явная проверка
+    print("Значение None")
+elif isinstance(result, int):
+    print(f"Числовое значение: {result}")
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- Парадокс 5: Область видимости -->
+            <div class="article-card" style="margin-bottom: 40px;">
+                <h3 style="font-size: 1.8em; color: #2ecc71; margin-bottom: 15px;">🔍 Парадокс 5: Область видимости (Scope)</h3>
+                <h4 style="color: #555; margin-top: 20px; margin-bottom: 10px;">Проблема:</h4>
+                <p>Python имеет интересные правила для области видимости, особенно с nonlocal и global—переменная может быть и глобальной, и локальной.</p>
+                
+                <div class="code-example" style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 3px solid #2ecc71;">
+                    <pre><code style="font-family: 'Fira Code', monospace; color: #333;">
+# Проблема: Парадокс области видимости
+x = "глобальная переменная"
+
+def outer():
+    x = "внешняя переменная"
+    
+    def inner():
+        x = "внутренняя переменная"  # Создаёт локальную переменную!
+        return x
+    
+    print(x)  # Печатает "внешняя переменная", не "внутренняя"
+    return inner()
+
+# outer()  # Выведет: внешняя переменная, внутренняя переменная
+
+# Решение: Используйте nonlocal
+x = "глобальная переменная"
+
+def outer():
+    x = "внешняя переменная"
+    
+    def inner():
+        nonlocal x  # Теперь ссылаемся на переменную из outer()
+        x = "изменённая внешняя переменная"
+        return x
+    
+    return inner()
+
+print(outer())  # Правильно работает
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- Итоговая таблица -->
+            <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 1.5em; margin-bottom: 20px;">📊 Таблица парадоксов</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #667eea;">
+                            <th style="padding: 10px; text-align: left; color: #667eea;">Парадокс</th>
+                            <th style="padding: 10px; text-align: left; color: #667eea;">Причина</th>
+                            <th style="padding: 10px; text-align: left; color: #667eea;">Решение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 10px;">Самореференция</td>
+                            <td style="padding: 10px;">Рекурсия без выхода</td>
+                            <td style="padding: 10px;">Базовый случай, проверка</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 10px;">Duck Typing</td>
+                            <td style="padding: 10px;">Нет явной типизации</td>
+                            <td style="padding: 10px;">ABC, Type hints</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 10px;">Бесконечность</td>
+                            <td style="padding: 10px;">Условие выхода отсутствует</td>
+                            <td style="padding: 10px;">Лимит итераций, условия</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 10px;">NoneType</td>
+                            <td style="padding: 10px;">Амбигуозная логика</td>
+                            <td style="padding: 10px;">Явные проверки типов</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Область видимости</td>
+                            <td style="padding: 10px;">Правила LEGB сложны</td>
+                            <td style="padding: 10px;">nonlocal, global, type hints</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Кнопки навигации -->
+            <div style="margin-top: 40px; text-align: center;">
+                <a href="index.html" class="btn btn-primary" style="margin-right: 10px;">← На главную</a>
+                <a href="paradoxes/index.html" class="btn btn-secondary">Философские парадоксы →</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Чит-лист парадоксов | Справка</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(210, 75%, 95%)',
+              100: 'hsl(210, 75%, 85%)',
+              200: 'hsl(210, 75%, 75%)',
+              300: 'hsl(210, 75%, 65%)',
+              400: 'hsl(210, 75%, 55%)',
+              500: 'hsl(210, 75%, 40%)',
+              600: 'hsl(210, 75%, 35%)',
+              700: 'hsl(210, 75%, 25%)',
+              800: 'hsl(210, 75%, 15%)',
+              900: 'hsl(210, 75%, 10%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .card-interactive {
+      transition: all 0.3s ease-out;
+    }
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+  </style>
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark');
+      }
+    });
+  </script>
+</head>
+<body class="transition-colors duration-300 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-200 dark:border-primary-800">
+    <nav class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <a href="index.html" class="text-xl font-bold text-primary-700 dark:text-primary-300 hover:text-primary-800 transition">← Назад</a>
+          <h1 class="text-xl font-bold text-primary-600 dark:text-primary-300">Чит-лист парадоксов</h1>
+        </div>
+        <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+          <i data-lucide="sun" id="sunIcon" class="w-5 h-5"></i>
+          <i data-lucide="moon" id="moonIcon" class="w-5 h-5" style="display:none;"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="min-h-screen pt-24 pb-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <!-- Introduction -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-4 text-primary-700 dark:text-primary-300">Справочник парадоксов</h2>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Быстрая справка по основным типам парадоксов и их характеристикам</p>
+      </section>
+
+      <!-- Paradoxes Grid -->
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <!-- Логические парадоксы -->
+        <div class="card-interactive bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+              <i data-lucide="binary" class="w-6 h-6 text-blue-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-300">Логические парадоксы</h3>
+          </div>
+          <div class="space-y-4">
+            <div class="pl-4 border-l-2 border-blue-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Лжеца</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">«Это предложение ложно» — если это правда, то оно ложно; если ложно, то правда</p>
+            </div>
+            <div class="pl-4 border-l-2 border-blue-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Рассела</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Множество всех множеств, которые не содержат себя в качестве элемента</p>
+            </div>
+            <div class="pl-4 border-l-2 border-blue-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Берри</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">«Наименьшее число, которое невозможно определить менее чем за двадцать словами»</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Семантические парадоксы -->
+        <div class="card-interactive bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+              <i data-lucide="message-circle" class="w-6 h-6 text-purple-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-purple-700 dark:text-purple-300">Семантические парадоксы</h3>
+          </div>
+          <div class="space-y-4">
+            <div class="pl-4 border-l-2 border-purple-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Сория</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Если на столе одна куча зёрен и мы убираем одно зерно, остаётся ли куча?</p>
+            </div>
+            <div class="pl-4 border-l-2 border-purple-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс коридора</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Определение туманного понятия нарушает его ясность</p>
+            </div>
+            <div class="pl-4 border-l-2 border-purple-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Цоллы</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Если все предложения имеют смысл, почему некоторые бессмысленны?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Физические парадоксы -->
+        <div class="card-interactive bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+              <i data-lucide="zap" class="w-6 h-6 text-green-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-green-700 dark:text-green-300">Физические парадоксы</h3>
+          </div>
+          <div class="space-y-4">
+            <div class="pl-4 border-l-2 border-green-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Дихотомии</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Для движения из точки А в точку Б нужно пересечь бесконечное число точек</p>
+            </div>
+            <div class="pl-4 border-l-2 border-green-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Ахилла и черепахи</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Быстрый бегун не может обогнать медленного противника</p>
+            </div>
+            <div class="pl-4 border-l-2 border-green-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Туннельный эффект</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Частица может появиться по другую сторону барьера, который не может преодолеть</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Философские парадоксы -->
+        <div class="card-interactive bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
+              <i data-lucide="lightbulb" class="w-6 h-6 text-orange-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-orange-700 dark:text-orange-300">Философские парадоксы</h3>
+          </div>
+          <div class="space-y-4">
+            <div class="pl-4 border-l-2 border-orange-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс деда</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Если я убью своего деда до рождения моего отца, то я не смогу родиться</p>
+            </div>
+            <div class="pl-4 border-l-2 border-orange-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс суперзадачи</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Можно ли завершить бесконечное число задач за конечное время?</p>
+            </div>
+            <div class="pl-4 border-l-2 border-orange-300">
+              <p class="font-semibold text-gray-900 dark:text-gray-100">Парадокс Квалиа</p>
+              <p class="text-sm text-gray-700 dark:text-gray-400">Как субъективные ощущения возникают из объективных процессов?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Table -->
+      <section class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 overflow-x-auto">
+        <h3 class="text-2xl font-bold mb-6 text-primary-700 dark:text-primary-300">Сравнительная таблица</h3>
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-gray-300 dark:border-gray-600">
+              <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-gray-100">Тип парадокса</th>
+              <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-gray-100">Область</th>
+              <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-gray-100">Разрешимость</th>
+              <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-gray-100">Сложность</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Лжец</td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Логика</td>
+              <td class="py-3 px-4"><span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-xs">Неразрешимо</span></td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Высокая</td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Дихотомия</td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Физика</td>
+              <td class="py-3 px-4"><span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-full text-xs">Частично</span></td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Средняя</td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Рассела</td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Теория множеств</td>
+              <td class="py-3 px-4"><span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-full text-xs">Частично</span></td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Высокая</td>
+            </tr>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Сория</td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Семантика</td>
+              <td class="py-3 px-4"><span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs">Разрешимо</span></td>
+              <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Средняя</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Navigation -->
+      <div class="mt-12 flex justify-center space-x-4">
+        <a href="index.html" class="px-6 py-3 bg-primary-600 dark:bg-primary-700 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition">← На главную</a>
+        <a href="quiz.html" class="px-6 py-3 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition">Пройти квиз →</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

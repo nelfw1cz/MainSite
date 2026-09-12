@@ -1,0 +1,23 @@
+# Игнорируемые файлы для Docker
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.db
+*.sqlite
+*.sqlite3
+.env
+.git
+.gitignore
+*.md
+!requirements.txt
+node_modules/
+dist/
+build/
+*.log
+.DS_Store
+Thumbs.db

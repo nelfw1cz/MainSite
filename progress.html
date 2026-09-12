@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогресс | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">📊 Мой прогресс</h1>
+            <p class="page-subtitle">Статистика обучения и достижения в изучении Python</p>
+            <div class="page-actions">
+                <button class="btn btn-outline" onclick="exportProgressToPDF()">📥 Экспорт PDF</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Общая статистика -->
+    <section class="progress-overview">
+        <div class="container">
+            <div class="progress-cards">
+                <div class="progress-card">
+                    <div class="progress-icon">📚</div>
+                    <div class="progress-info">
+                        <span class="progress-value" id="totalTasks">0</span>
+                        <span class="progress-label">Всего задач</span>
+                    </div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-icon">✅</div>
+                    <div class="progress-info">
+                        <span class="progress-value" id="completedTasks">0</span>
+                        <span class="progress-label">Решено</span>
+                    </div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-icon">🔥</div>
+                    <div class="progress-info">
+                        <span class="progress-value" id="currentStreak">0</span>
+                        <span class="progress-label">Дней подряд</span>
+                    </div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-icon">⭐</div>
+                    <div class="progress-info">
+                        <span class="progress-value" id="totalXP">0</span>
+                        <span class="progress-label">XP очков</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- График активности -->
+    <section class="activity-section">
+        <div class="container">
+            <h2 class="section-title">Активность за неделю</h2>
+            <div class="activity-chart">
+                <canvas id="weekChartCanvas" height="80"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Прогресс по темам -->
+    <section class="topics-progress-section">
+        <div class="container">
+            <h2 class="section-title">Прогресс по темам</h2>
+            <div class="topics-grid" id="topicsGrid">
+                <!-- Темы будут добавлены через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Достижения -->
+    <section class="achievements-section">
+        <div class="container">
+            <h2 class="section-title">🏆 Достижения</h2>
+            <div class="achievements-grid" id="achievementsGrid">
+                <!-- Достижения будут добавлены через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Календарь активности -->
+    <section class="calendar-section">
+        <div class="container">
+            <h2 class="section-title">📅 Календарь активности</h2>
+            <div class="activity-calendar" id="activityCalendar">
+                <!-- Календарь будет добавлен через JS -->
+            </div>
+            <div class="calendar-legend">
+                <span>Меньше</span>
+                <div class="legend-box level-0"></div>
+                <div class="legend-box level-1"></div>
+                <div class="legend-box level-2"></div>
+                <div class="legend-box level-3"></div>
+                <div class="legend-box level-4"></div>
+                <span>Больше</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- План обучения -->
+    <section class="roadmap-section">
+        <div class="container">
+            <h2 class="section-title">🗺️ План обучения</h2>
+            <div class="roadmap" id="roadmap">
+                <!-- Roadmap будет добавлен через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Доска почёта -->
+    <section class="leaderboard-section">
+        <div class="container">
+            <h2 class="section-title">🏆 Доска почёта</h2>
+            <div class="leaderboard" id="leaderboard">
+                <!-- Leaderboard будет добавлен через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="progress.html">Прогресс</a></li>
+                        <li><a href="about.html">О себе</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="contacts.html">Связаться со мной</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Telegram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="features.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ресурсы | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+    <style>
+        .resources-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: var(--border-color);
+            color: var(--text-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--accent-primary);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px var(--shadow-color);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .resource-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .resource-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .resource-badge {
+            background: var(--accent-primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .resource-badge.level-beginner {
+            background: #10b981;
+        }
+
+        .resource-badge.level-intermediate {
+            background: #f59e0b;
+        }
+
+        .resource-badge.level-advanced {
+            background: #ef4444;
+        }
+
+        .resource-link {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .resource-link:hover {
+            background: var(--accent-hover);
+            transform: translateX(5px);
+        }
+
+        .resource-link.external {
+            margin-right: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link active">📚 Ресурсы</a></li>
+                <li><a href="sections.html" class="nav-link">📚 Разделы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link active">📚 Ресурсы</a>
+        <a href="sections.html" class="mobile-link">📚 Разделы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Герой-секция -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="highlight">Полезные ресурсы</span>
+                <br>Лучшие материалы для обучения Python
+            </h1>
+            <p class="hero-subtitle">Тщательно подобранная коллекция книг, курсов и веб-сайтов</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <!-- Фильтры -->
+                <div class="resources-filter">
+                    <button class="filter-btn active" onclick="filterResources('all')">Все ресурсы</button>
+                    <button class="filter-btn" onclick="filterResources('books')">📚 Книги</button>
+                    <button class="filter-btn" onclick="filterResources('courses')">🎓 Курсы</button>
+                    <button class="filter-btn" onclick="filterResources('websites')">🌐 Веб-сайты</button>
+                    <button class="filter-btn" onclick="filterResources('youtube')">📺 YouTube</button>
+                </div>
+
+                <!-- Карточки ресурсов -->
+                <div class="resources-grid" id="resourcesGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4>PythonPath</h4>
+                <p>Ваш путь в мир Python программирования</p>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="blog.html">Блог</a></li>
+                    <li><a href="dev-tools.html">Dev Tools</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PythonPath. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        const resources = [
+            {
+                id: 1,
+                category: 'books',
+                title: 'Python для чайников',
+                icon: '📚',
+                description: 'Идеальная книга для новичков. Охватывает основные концепции Python простым языком.',
+                level: 'beginner',
+                author: 'Bill Lubbanovic',
+                link: '#'
+            },
+            {
+                id: 2,
+                category: 'books',
+                title: 'Fluent Python',
+                icon: '📙',
+                description: 'Углубленное изучение Python. Для тех, кто хочет овладеть языком полностью.',
+                level: 'advanced',
+                author: 'Luciano Ramalho',
+                link: '#'
+            },
+            {
+                id: 3,
+                category: 'courses',
+                title: 'Python для Начинающих',
+                icon: '🎓',
+                description: 'Структурированный курс на Udemy с видеоуроками и практическими заданиями.',
+                level: 'beginner',
+                platform: 'Udemy',
+                link: '#'
+            },
+            {
+                id: 4,
+                category: 'courses',
+                title: 'Complete Python Bootcamp',
+                icon: '👨‍💻',
+                description: 'Интенсивный бутлагерь от базовых концепций до веб-разработки.',
+                level: 'intermediate',
+                platform: 'Udemy',
+                link: '#'
+            },
+            {
+                id: 5,
+                category: 'websites',
+                title: 'Codecademy - Python',
+                icon: '🌐',
+                description: 'Интерактивные уроки Python онлайн с мгновенной обратной связью.',
+                level: 'beginner',
+                platform: 'Codecademy',
+                link: 'https://codecademy.com'
+            },
+            {
+                id: 6,
+                category: 'websites',
+                title: 'DataCamp',
+                icon: '📊',
+                description: 'Специализированные курсы по Data Science и анализу данных на Python.',
+                level: 'intermediate',
+                platform: 'DataCamp',
+                link: 'https://datacamp.com'
+            },
+            {
+                id: 7,
+                category: 'youtube',
+                title: 'Programming with Mosh',
+                icon: '📺',
+                description: 'Крайне популярный канал с понятными видеоуроками по Python и веб-разработке.',
+                level: 'beginner',
+                platform: 'YouTube',
+                link: 'https://youtube.com/@programmingwithmosh'
+            },
+            {
+                id: 8,
+                category: 'youtube',
+                title: 'Tech with Tim',
+                icon: '🎥',
+                description: 'Высокоуровневый контент про Python, машинное обучение и лучшие практики.',
+                level: 'intermediate',
+                platform: 'YouTube',
+                link: 'https://youtube.com/@techwithtim'
+            },
+            {
+                id: 9,
+                category: 'websites',
+                title: 'Real Python',
+                icon: '🔗',
+                description: 'Огромная коллекция статей, учебников и курсов по Python.',
+                level: 'all',
+                platform: 'Real Python',
+                link: 'https://realpython.com'
+            },
+            {
+                id: 10,
+                category: 'websites',
+                title: 'LeetCode',
+                icon: '⚙️',
+                description: 'Лучший сайт для практики алгоритмов и подготовки к собеседованиям.',
+                level: 'intermediate',
+                platform: 'LeetCode',
+                link: 'https://leetcode.com'
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        function renderResources(filter = 'all') {
+            const grid = document.getElementById('resourcesGrid');
+            const filtered = filter === 'all' ? resources : resources.filter(r => r.category === filter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">🔍</div>
+                        <p>Ресурсов в этой категории не найдено</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(resource => `
+                <div class="resource-card">
+                    <div class="resource-icon">${resource.icon}</div>
+                    <div class="resource-title">${resource.title}</div>
+                    <div class="resource-description">${resource.description}</div>
+                    <div class="resource-meta">
+                        <span class="resource-badge level-${resource.level}">
+                            ${getLevelText(resource.level)}
+                        </span>
+                        <span class="resource-badge">${resource.platform || resource.author}</span>
+                    </div>
+                    <a href="${resource.link}" target="_blank" class="resource-link external">Посетить →</a>
+                </div>
+            `).join('');
+        }
+
+        function getLevelText(level) {
+            const map = {
+                'beginner': 'Для начинающих',
+                'intermediate': 'Промежуточный',
+                'advanced': 'Продвинутый',
+                'all': 'Все уровни'
+            };
+            return map[level] || level;
+        }
+
+        function filterResources(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderResources(category);
+        }
+
+        // Тема
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Меню
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Инициализация
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            renderResources('all');
+        });
+    </script>
+</body>
+</html>

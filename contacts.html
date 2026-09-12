@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">📬 Контакты</h1>
+            <p class="page-subtitle">Свяжитесь со мной для сотрудничества или вопросов</p>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section class="contacts-section">
+        <div class="container">
+            <div class="contacts-grid">
+                <!-- Контактная информация -->
+                <div class="contacts-info">
+                    <h2 class="contacts-title">Давайте свяжемся!</h2>
+                    <p class="contacts-description">
+                        Я всегда открыт для обсуждения новых идей, проектов и возможностей сотрудничества. 
+                        Не стесняйтесь писать мне по любому поводу!
+                    </p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">📧</div>
+                            <div class="method-info">
+                                <h4>Email</h4>
+                                <a href="mailto:your.email@example.com">your.email@example.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="method-icon">💬</div>
+                            <div class="method-info">
+                                <h4>Telegram</h4>
+                                <a href="https://t.me/yourusername" target="_blank">@yourusername</a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="method-icon">🐙</div>
+                            <div class="method-info">
+                                <h4>GitHub</h4>
+                                <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="method-icon">📱</div>
+                            <div class="method-info">
+                                <h4>Соцсети</h4>
+                                <a href="#">VK / LinkedIn</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="location-info">
+                        <div class="location-icon">📍</div>
+                        <div class="location-text">
+                            <h4>Местоположение</h4>
+                            <p>Ваш город, Страна</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Форма обратной связи -->
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <h3 class="form-title">Написать сообщение</h3>
+                        <div class="form-group">
+                            <label for="contactName">Ваше имя</label>
+                            <input type="text" id="contactName" required placeholder="Как к вам обращаться?">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Тема</label>
+                            <input type="text" id="contactSubject" required placeholder="О чём хотите поговорить?">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Сообщение</label>
+                            <textarea id="contactMessage" rows="5" required placeholder="Ваше сообщение..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Отправить сообщение</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Частые вопросы</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Можно ли использовать ваши решения?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Да, конечно! Мои решения открыты для изучения. Но рекомендую разбираться в коде самостоятельно, а не просто копировать.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Поможете ли вы с решением задачи?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Я с радостью помогу советом или объясню концепцию! Но важно, чтобы вы сами пробовали решить задачу — так обучение эффективнее.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Как часто вы обновляете сайт?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Я стараюсь добавлять новые задачи регулярно, минимум несколько раз в неделю. Подписывайтесь, чтобы не пропустить обновления!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Можно ли предложить задачу для решения?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Да! Присылайте интересные задачи на email или в Telegram. Если задача покажется мне интересной, я обязательно её решу и выложу на сайт.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="progress.html">Прогресс</a></li>
+                        <li><a href="about.html">О себе</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="contacts.html">Связаться со мной</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Telegram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

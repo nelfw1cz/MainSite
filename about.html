@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О себе | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">👨‍💻 О себе</h1>
+            <p class="page-subtitle">Немного обо мне и моём пути в программировании</p>
+        </div>
+    </section>
+
+    <!-- Обо мне -->
+    <section class="about-me-section">
+        <div class="container">
+            <div class="about-me-grid">
+                <div class="about-me-image">
+                    <div class="profile-photo">
+                        <span class="photo-emoji">👨‍💻</span>
+                    </div>
+                </div>
+                <div class="about-me-content">
+                    <h2 class="about-title">Привет! Меня зовут [Ваше имя]</h2>
+                    <p class="about-text">
+                        Я изучаю программирование на Python и Веду этот блог, чтобы документировать свой прогресс 
+                        и делиться знаниями с другими начинающими разработчиками.
+                    </p>
+                    <p class="about-text">
+                        Мой путь начался с простого интереса к тому, как работают программы. 
+                        Сейчас я активно изучаю алгоритмы, структуры данных и веб-разработку.
+                    </p>
+                    <div class="about-skills">
+                        <h3 class="skills-title">Мои навыки</h3>
+                        <div class="skills-list">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Алгоритмы</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Таймлайн обучения -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">📅 Мой путь обучения</h2>
+            <div class="timeline" id="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">🎯</div>
+                    <div class="timeline-content">
+                        <h3>Начало пути</h3>
+                        <span class="timeline-date">Январь 2026</span>
+                        <p>Начал изучать основы Python: переменные, типы данных, условные операторы</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">📚</div>
+                    <div class="timeline-content">
+                        <h3>Первые программы</h3>
+                        <span class="timeline-date">Февраль 2026</span>
+                        <p>Изучил циклы, функции и начал решать простые задачи на Codewars</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">🔥</div>
+                    <div class="timeline-content">
+                        <h3>Структуры данных</h3>
+                        <span class="timeline-date">Март 2026</span>
+                        <p>Освоил списки, словари, множества и кортежи. Работа с файлами.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">🚀</div>
+                    <div class="timeline-content">
+                        <h3>Следующий шаг</h3>
+                        <span class="timeline-date">В планах</span>
+                        <p>ООП, работа с API, веб-фреймворки (Flask/Django)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Цели -->
+    <section class="goals-section">
+        <div class="container">
+            <h2 class="section-title">🎯 Мои цели</h2>
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <div class="goal-icon">📖</div>
+                    <h3>Краткосрочные</h3>
+                    <ul>
+                        <li>Решать 5 задач в неделю</li>
+                        <li>Изучить ОП в Python</li>
+                        <li>Создать портфолио проектов</li>
+                        <li>Пройти курс на Stepik</li>
+                    </ul>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">🏆</div>
+                    <h3>Долгосрочные</h3>
+                    <ul>
+                        <li>Стать Python-разработчиком</li>
+                        <li>Изучить Django/FastAPI</li>
+                        <li>Участвовать в Open Source</li>
+                        <li>Найти первую работу в IT</li>
+                    </ul>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">💡</div>
+                    <h3>Навыки в развитии</h3>
+                    <ul>
+                        <li>Алгоритмическое мышление</li>
+                        <li>Чистый код (PEP 8)</li>
+                        <li>Работа с Git</li>
+                        <li>Английский для IT</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ресурсы -->
+    <section class="resources-section">
+        <div class="container">
+            <h2 class="section-title">📚 Полезные ресурсы</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>🎓 Обучение</h3>
+                    <ul>
+                        <li><a href="https://docs.python.org/3/" target="_blank">Официальная документация Python</a></li>
+                        <li><a href="https://stepik.org/" target="_blank">Stepik — курсы по Python</a></li>
+                        <li><a href="https://www.coursera.org/" target="_blank">Coursera</a></li>
+                        <li><a href="https://hexlet.io/" target="_blank">Hexlet</a></li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h3>💻 Практика</h3>
+                    <ul>
+                        <li><a href="https://leetcode.com/" target="_blank">LeetCode</a></li>
+                        <li><a href="https://www.codewars.com/" target="_blank">Codewars</a></li>
+                        <li><a href="https://hackerrank.com/" target="_blank">HackerRank</a></li>
+                        <li><a href="https://py.checkio.org/" target="_blank">CheckiO</a></li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h3>📖 Книги</h3>
+                    <ul>
+                        <li>"Изучаем Python" — Марк Лутц</li>
+                        <li>"Python. К вершинам мастерства" — Лучано Рамальо</li>
+                        <li>"Грокаем алгоритмы" — Адитья Бхаргава</li>
+                        <li>"Чистый код" — Роберт Мартин</li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h3>🎬 YouTube</h3>
+                    <ul>
+                        <li><a href="https://www.youtube.com/c/EgoroffChannel" target="_blank">Егор Хомяков</a></li>
+                        <li><a href="https://www.youtube.com/c/SeverelyIT" target="_blank">Severely IT</a></li>
+                        <li><a href="https://www.youtube.com/c/CoreySchafer" target="_blank">Corey Schafer</a></li>
+                        <li><a href="https://www.youtube.com/c/ProgrammingWithMosh" target="_blank">Programming with Mosh</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="progress.html">Прогресс</a></li>
+                        <li><a href="about.html">О себе</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="contacts.html">Связаться со мной</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Telegram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

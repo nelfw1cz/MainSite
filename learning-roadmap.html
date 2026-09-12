@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дорожная карта Python | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+    <style>
+        .roadmap-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .roadmap-item.left {
+            flex-direction: row-reverse;
+        }
+
+        .roadmap-marker {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            z-index: 2;
+            position: relative;
+            box-shadow: 0 0 0 4px var(--bg-primary);
+        }
+
+        .roadmap-content {
+            flex: 1;
+            padding: 0 30px;
+        }
+
+        .roadmap-item.left .roadmap-content {
+            text-align: right;
+        }
+
+        .roadmap-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-item.left .roadmap-card {
+            border-left: none;
+            border-right: 4px solid var(--accent-primary);
+        }
+
+        .roadmap-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .roadmap-item.left .roadmap-card:hover {
+            transform: translateX(-10px);
+        }
+
+        .roadmap-card h3 {
+            color: var(--accent-primary);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .roadmap-card p {
+            margin: 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .roadmap-card ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .roadmap-card li {
+            margin: 5px 0;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: var(--accent-hover);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .level-beginner { background: #4CAF50; }
+        .level-intermediate { background: #FF9800; }
+        .level-advanced { background: #E91E63; }
+        .level-expert { background: #9C27B0; }
+
+        .roadmap-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+            transform: translateX(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .roadmap-item,
+            .roadmap-item.left {
+                flex-direction: column;
+            }
+
+            .roadmap-content,
+            .roadmap-item.left .roadmap-content {
+                text-align: left;
+                padding: 0 0 0 30px;
+            }
+
+            .roadmap-marker {
+                margin-left: -54px;
+            }
+
+            .roadmap-card,
+            .roadmap-item.left .roadmap-card {
+                border-left: 4px solid var(--accent-primary);
+                border-right: none;
+            }
+
+            .roadmap-item.left .roadmap-card:hover {
+                transform: translateX(10px);
+            }
+
+            .roadmap-line {
+                left: 0;
+            }
+        }
+
+        .choice-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .choice-card {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .choice-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .choice-card h4 {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            color: var(--accent-primary);
+        }
+
+        .progress-section {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: var(--bg-primary);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="sections.html" class="nav-link">📚 Разделы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="sections.html" class="mobile-link">📚 Разделы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Герой-секция -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="highlight">Дорожная карта Python</span>
+                <br>Путь от новичка до профессионала
+            </h1>
+            <p class="hero-subtitle">Структурированный план обучения с рекомендациями и ресурсами</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">📚 Полная дорожная карта</h2>
+                
+                <div class="roadmap-container">
+                    <div class="roadmap-line"></div>
+
+                    <!-- Уровень 1 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-marker">1</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>🚀 Введение в Python</h3>
+                                <p><strong>Основы синтаксиса и инструменты</strong></p>
+                                <ul>
+                                    <li>Установка Python и IDE</li>
+                                    <li>Первая программа "Hello World"</li>
+                                    <li>Переменные и типы данных</li>
+                                    <li>Вывод данных (print)</li>
+                                </ul>
+                                <span class="level-badge level-beginner">Начинающий</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 2 -->
+                    <div class="roadmap-item left">
+                        <div class="roadmap-marker">2</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>➕ Операторы и условия</h3>
+                                <p><strong>Логика и управление ходом</strong></p>
+                                <ul>
+                                    <li>Арифметические операторы</li>
+                                    <li>Условия (if, elif, else)</li>
+                                    <li>Логические операторы (and, or, not)</li>
+                                    <li>Тернарный оператор</li>
+                                </ul>
+                                <span class="level-badge level-beginner">Начинающий</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 3 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-marker">3</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>🔄 Циклы и итерация</h3>
+                                <p><strong>Повтор кода и обработка последовательностей</strong></p>
+                                <ul>
+                                    <li>Цикл for с range()</li>
+                                    <li>Цикл while</li>
+                                    <li>Break и continue</li>
+                                    <li>Вложенные циклы</li>
+                                </ul>
+                                <span class="level-badge level-beginner">Начинающий</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 4 -->
+                    <div class="roadmap-item left">
+                        <div class="roadmap-marker">4</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>📊 Структуры данных</h3>
+                                <p><strong>Списки, кортежи, словари и множества</strong></p>
+                                <ul>
+                                    <li>Списки (list) и методы</li>
+                                    <li>Кортежи (tuple)</li>
+                                    <li>Словари (dict)</li>
+                                    <li>Множества (set)</li>
+                                    <li>Срезы и индексация</li>
+                                </ul>
+                                <span class="level-badge level-intermediate">Средний</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 5 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-marker">5</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>⚙️ Функции</h3>
+                                <p><strong>Переиспользуемый код и модульность</strong></p>
+                                <ul>
+                                    <li>Определение функций</li>
+                                    <li>Параметры и аргументы</li>
+                                    <li>Возвращаемые значения</li>
+                                    <li>*args и **kwargs</li>
+                                    <li>Lambda функции</li>
+                                </ul>
+                                <span class="level-badge level-intermediate">Средний</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 6 -->
+                    <div class="roadmap-item left">
+                        <div class="roadmap-marker">6</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>📝 Работа со строками</h3>
+                                <p><strong>Обработка текства и форматирование</strong></p>
+                                <ul>
+                                    <li>Методы строк</li>
+                                    <li>F-strings форматирование</li>
+                                    <li>Регулярные выражения (regex)</li>
+                                    <li>Кодировка символов</li>
+                                </ul>
+                                <span class="level-badge level-intermediate">Средний</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 7 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-marker">7</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>🔧 Объектно-ориентированное программирование</h3>
+                                <p><strong>Классы, объекты и наследование</strong></p>
+                                <ul>
+                                    <li>Классы и объекты</li>
+                                    <li>Методы и атрибуты</li>
+                                    <li>Конструктор __init__</li>
+                                    <li>Наследование</li>
+                                    <li>Полиморфизм и инкапсуляция</li>
+                                </ul>
+                                <span class="level-badge level-advanced">Продвинутый</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 8 -->
+                    <div class="roadmap-item left">
+                        <div class="roadmap-marker">8</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>📂 Работа с файлами и исключениями</h3>
+                                <p><strong>Обработка ошибок и работа с диском</strong></p>
+                                <ul>
+                                    <li>Открытие и закрытие файлов</li>
+                                    <li>Чтение и запись файлов</li>
+                                    <li>Try-except блоки</li>
+                                    <li>Custom исключения</li>
+                                    <li>Context managers (with)</li>
+                                </ul>
+                                <span class="level-badge level-advanced">Продвинутый</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 9 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-marker">9</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>🎁 Модули и пакеты</h3>
+                                <p><strong>Организация кода и переиспользование</strong></p>
+                                <ul>
+                                    <li>Import и from import</li>
+                                    <li>Встроенные модули (os, sys, time)</li>
+                                    <li>Создание своих модулей</li>
+                                    <li>Пакеты и __init__.py</li>
+                                    <li>pip и виртуальные окружения</li>
+                                </ul>
+                                <span class="level-badge level-advanced">Продвинутый</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень 10 -->
+                    <div class="roadmap-item left">
+                        <div class="roadmap-marker">10</div>
+                        <div class="roadmap-content">
+                            <div class="roadmap-card">
+                                <h3>🚀 Специализация</h3>
+                                <p><strong>Выберите свой путь развития</strong></p>
+                                <ul>
+                                    <li>🌐 Web Development (Django, Flask)</li>
+                                    <li>📊 Data Science (Pandas, NumPy)</li>
+                                    <li>🤖 Machine Learning (TensorFlow, PyTorch)</li>
+                                    <li>⚙️ Automation (Selenium, asyncio)</li>
+                                </ul>
+                                <span class="level-badge level-expert">Эксперт</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Выбор специализации -->
+        <section class="section" style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="choice-section">
+                    <h2 class="section-title">🎯 Выберите свою специализацию</h2>
+                    
+                    <div class="choice-grid">
+                        <div class="choice-card">
+                            <div style="font-size: 3rem;">🌐</div>
+                            <h4>Web Development</h4>
+                            <p>Создавайте веб-приложения с Django и Flask</p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Data, API, Templates</p>
+                        </div>
+
+                        <div class="choice-card">
+                            <div style="font-size: 3rem;">📊</div>
+                            <h4>Data Science</h4>
+                            <p>Анализируйте данные и создавайте визуализации</p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Pandas, NumPy, Matplotlib</p>
+                        </div>
+
+                        <div class="choice-card">
+                            <div style="font-size: 3rem;">🤖</div>
+                            <h4>Machine Learning</h4>
+                            <p>Обучайте нейросети и создавайте AI</p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">TensorFlow, PyTorch, Scikit</p>
+                        </div>
+
+                        <div class="choice-card">
+                            <div style="font-size: 3rem;">⚙️</div>
+                            <h4>Automation</h4>
+                            <p>Автоматизируйте рутинные задачи</p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Selenium, asyncio, Schedule</p>
+                        </div>
+
+                        <div class="choice-card">
+                            <div style="font-size: 3rem;">🎮</div>
+                            <h4>Game Development</h4>
+                            <p>Создавайте игры и интерактивные приложения</p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Pygame, Kivy</p>
+                        </div>
+
+                        <div class="choice-card">
+                            <div style="font-size: 3rem;">🔐</div>
+                            <h4>Cybersecurity</h4>
+                            <p>Защищайте системы и тестируйте безопасность</p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Cryptography, Hacking</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Советы -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">💡 Советы для успешного обучения</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">71%</div>
+                        <div class="stat-label">Практики</div>
+                        <p>Пишите код каждый день. Только практика развивает навыки!</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">20%</div>
+                        <div class="stat-label">Теория</div>
+                        <p>Изучайте теорию, но не зацикливайтесь на ней</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">9%</div>
+                        <div class="stat-label">Проекты</div>
+                        <p>Создавайте реальные проекты для портфолио</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4>PythonPath</h4>
+                <p>Ваш путь в мир Python программирования</p>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="tasks.html">Задачи</a></li>
+                    <li><a href="learning-roadmap.html">Дорожная карта</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PythonPath. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Меню
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Тема
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Загрузить тему при загрузке страницы
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+
+        // Анимация прогресс-бара
+        window.addEventListener('load', () => {
+            const fills = document.querySelectorAll('.progress-fill');
+            const percentages = [75, 45, 30];
+            fills.forEach((fill, index) => {
+                setTimeout(() => {
+                    fill.style.width = percentages[index] + '%';
+                }, 500 + index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

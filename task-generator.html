@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор задач Python | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+    <style>
+        .generator-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .generator-panel {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .generator-panel h3 {
+            margin-top: 0;
+            color: var(--accent-primary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-generate,
+        .btn-clear {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-generate {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-generate:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-clear {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-clear:hover {
+            background: var(--bg-secondary);
+        }
+
+        .task-display {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .task-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+            margin: 0;
+        }
+
+        .task-difficulty {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .difficulty-easy { background: #4CAF50; }
+        .difficulty-medium { background: #FF9800; }
+        .difficulty-hard { background: #E91E63; }
+
+        .task-content {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .task-section {
+            margin-bottom: 20px;
+        }
+
+        .task-section h4 {
+            color: var(--accent-primary);
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .task-example {
+            background: var(--bg-primary);
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-primary);
+            font-family: "Fira Code", monospace;
+            font-size: 0.9rem;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-copy,
+        .btn-solve {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-copy {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-solve {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-solve:hover {
+            background: var(--accent-hover);
+        }
+
+        .no-task {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .generator-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-mini {
+            text-align: center;
+            padding: 15px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+
+        .stat-mini-num {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+
+        .stat-mini-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="sections.html" class="nav-link">📚 Разделы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="sections.html" class="mobile-link">📚 Разделы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+        <a href="game.html" class="mobile-link">🎮 Игра</a>
+    </div>
+
+    <!-- Герой-секция -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="highlight">Генератор задач</span>
+                <br>Практикуйся с новыми задачами каждый день
+            </h1>
+            <p class="hero-subtitle">Автоматически генерируемые задачи по выбранной категории и уровню сложности</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <div class="generator-container">
+                    <!-- Панель параметров -->
+                    <div class="generator-panel">
+                        <h3>⚙️ Параметры генерации</h3>
+
+                        <div class="form-group">
+                            <label for="category">📂 Категория:</label>
+                            <select id="category">
+                                <option value="strings">Строки</option>
+                                <option value="lists">Списки</option>
+                                <option value="dicts">Словари</option>
+                                <option value="loops">Циклы</option>
+                                <option value="functions">Функции</option>
+                                <option value="math">Математика</option>
+                                <option value="algorithms">🔄 Алгоритмы</option>
+                                <option value="dynamic">💾 ДП</option>
+                                <option value="ege">📋 ЕГЭ</option>
+                                <option value="leetcode">⭐ LeetCode</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="difficulty">⭐ Сложность:</label>
+                            <select id="difficulty">
+                                <option value="easy">Легко</option>
+                                <option value="medium">Средне</option>
+                                <option value="hard">Сложно</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="language">💻 Язык решения:</label>
+                            <select id="language">
+                                <option value="python">Python</option>
+                                <option value="pseudo">Псевдокод</option>
+                            </select>
+                        </div>
+
+                        <div class="button-group">
+                            <button class="btn-generate" onclick="generateTask()">🎲 Сгенерировать</button>
+                            <button class="btn-clear" onclick="clearTask()">✕ Очистить</button>
+                        </div>
+
+                        <div class="stats-mini">
+                            <div class="stat-mini">
+                                <div class="stat-mini-num" id="taskCount">0</div>
+                                <div class="stat-mini-label">Задач</div>
+                            </div>
+                            <div class="stat-mini">
+                                <div class="stat-mini-num" id="solvedCount">0</div>
+                                <div class="stat-mini-label">Решено</div>
+                            </div>
+                            <div class="stat-mini">
+                                <div class="stat-mini-num" id="solveRate">0%</div>
+                                <div class="stat-mini-label">Успех</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Отображение задачи -->
+                    <div class="task-display" id="taskDisplay">
+                        <div class="no-task">👈 Выберите параметры и нажмите "Сгенерировать"</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Совет дня -->
+        <section class="section" style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="about-card">
+                    <h3>💡 Совет дня</h3>
+                    <p id="tipOfDay">Сосредоточьтесь на понимании задачи перед написанием кода. Прочитайте условие несколько раз и убедитесь, что вы понимаете, что требуется.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4>PythonPath</h4>
+                <p>Ваш путь в мир Python программирования</p>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="tasks.html">Задачи</a></li>
+                    <li><a href="python-cheatsheet.html">Шпаргалка</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PythonPath. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // База задач
+        const tasksDatabase = {
+            strings: {
+                easy: [
+                    {
+                        title: "Преобразование в верхний регистр",
+                        description: "Напишите функцию, которая преобразует строку в верхний регистр.",
+                        input: 'text = "hello world"',
+                        expected: 'HELLO WORLD',
+                        hint: "Используйте метод .upper()",
+                        solution: `text = "hello world"
+print(text.upper())`
+                    },
+                    {
+                        title: "Подсчёт символов",
+                        description: "Напишите программу, которая подсчитывает количество отдельных символов в строке.",
+                        input: 'text = "python"',
+                        expected: '6 символов',
+                        hint: "Используйте функцию len()",
+                        solution: `text = "python"
+print(len(text))`
+                    },
+                    {
+                        title: "Замена символов",
+                        description: "Замените все пробелы на подчёркивания в строке.",
+                        input: 'text = "hello world python"',
+                        expected: 'hello_world_python',
+                        hint: "Используйте метод .replace()",
+                        solution: `text = "hello world python"
+result = text.replace(" ", "_")
+print(result)`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Проверка палиндрома",
+                        description: "Напишите функцию, которая проверяет, является ли строка палиндромом (читается одинаково в обе стороны).",
+                        input: 'text = "racecar"',
+                        expected: 'True',
+                        hint: "Сравните строку с её обратной версией [::−1]",
+                        solution: `text = "racecar".lower()
+is_palindrome = text == text[::-1]
+print(is_palindrome)`
+                    },
+                    {
+                        title: "Разворот строки",
+                        description: "Разверните строку в обратном порядке.",
+                        input: 'text = "Python"',
+                        expected: 'nohtyP',
+                        hint: "Используйте срез [::-1]",
+                        solution: `text = "Python"
+reversed_text = text[::-1]
+print(reversed_text)`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "Анаграмма",
+                        description: "Проверьте, являются ли две строки анаграммой друг друга.",
+                        input: 'text1 = "listen", text2 = "silent"',
+                        expected: 'True',
+                        hint: "Сортируйте символы и сравните",
+                        solution: `text1 = "listen"
+text2 = "silent"
+is_anagram = sorted(text1) == sorted(text2)
+print(is_anagram)`
+                    }
+                ]
+            },
+            lists: {
+                easy: [
+                    {
+                        title: "Создание списка",
+                        description: "Создайте список чисел от 1 до 5.",
+                        input: 'используйте range()',
+                        expected: '[1, 2, 3, 4, 5]',
+                        hint: "list(range(1, 6))",
+                        solution: `numbers = list(range(1, 6))
+print(numbers)`
+                    },
+                    {
+                        title: "Сумма элементов",
+                        description: "Найдите сумму всех элементов списка.",
+                        input: 'numbers = [1, 2, 3, 4, 5]',
+                        expected: '15',
+                        hint: "Используйте функцию sum()",
+                        solution: `numbers = [1, 2, 3, 4, 5]
+total = sum(numbers)
+print(total)`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Фильтрация чётных чисел",
+                        description: "Отфильтруйте из списка только чётные числа.",
+                        input: 'numbers = [1, 2, 3, 4, 5, 6, 7, 8]',
+                        expected: '[2, 4, 6, 8]',
+                        hint: "Используйте list comprehension",
+                        solution: `numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+evens = [n for n in numbers if n % 2 == 0]
+print(evens)`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "Удаление дубликатов",
+                        description: "Удалите дубликаты из списка, сохраняя порядок.",
+                        input: 'numbers = [1, 2, 2, 3, 3, 3, 4]',
+                        expected: '[1, 2, 3, 4]',
+                        hint: "Используйте set() или list comprehension",
+                        solution: `numbers = [1, 2, 2, 3, 3, 3, 4]
+unique = list(dict.fromkeys(numbers))
+print(unique)`
+                    }
+                ]
+            },
+            dicts: {
+                easy: [
+                    {
+                        title: "Создание словаря",
+                        description: "Создайте словарь с информацией о человеке (имя, возраст, город).",
+                        input: 'ключи: name, age, city',
+                        expected: '{"name": "John", "age": 25, "city": "New York"}',
+                        hint: "d = {\"ключ\": \"значение\"}",
+                        solution: `person = {
+    "name": "John",
+    "age": 25,
+    "city": "New York"
+}
+print(person)`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Подсчёт символов",
+                        description: "Создайте словарь, где ключи - это символы, а значения - их количество.",
+                        input: 'text = "hello"',
+                        expected: '{"h": 1, "e": 1, "l": 2, "o": 1}',
+                        hint: "Итерируйте по строке",
+                        solution: `text = "hello"
+char_count = {}
+for char in text:
+    char_count[char] = char_count.get(char, 0) + 1
+print(char_count)`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "Объединение словарей",
+                        description: "Объедините два словаря в один без потери данных.",
+                        input: 'd1 = {\"a\": 1}, d2 = {\"b\": 2}',
+                        expected: '{"a": 1, "b": 2}',
+                        hint: "Используйте {**d1, **d2} или update()",
+                        solution: `d1 = {"a": 1}
+d2 = {"b": 2}
+merged = {**d1, **d2}
+print(merged)`
+                    }
+                ]
+            },
+            loops: {
+                easy: [
+                    {
+                        title: "Цикл for",
+                        description: "Напишите цикл, который выведет числа от 1 до 5.",
+                        input: 'используйте for',
+                        expected: '1 2 3 4 5',
+                        hint: "for i in range(1, 6): print(i)",
+                        solution: `for i in range(1, 6):
+    print(i)`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Таблица умножения",
+                        description: "Выведите таблицу умножения на 3 (от 1 до 10).",
+                        input: 'используйте loop',
+                        expected: '3 6 9 12 15...',
+                        hint: "Используйте вложенный цикл или цикл с умножением",
+                        solution: `for i in range(1, 11):
+    print(f"3 × {i} = {3 * i}")`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "Числа Фибоначчи",
+                        description: "Выведите первые 10 чисел последовательности Фибоначчи.",
+                        input: 'последовательность: 0, 1, 1, 2, 3, 5...',
+                        expected: '0 1 1 2 3 5 8 13 21 34',
+                        hint: "Используйте while или for с хранением двух переменных",
+                        solution: `a, b = 0, 1
+for _ in range(10):
+    print(a, end=" ")
+    a, b = b, a + b`
+                    }
+                ]
+            },
+            functions: {
+                easy: [
+                    {
+                        title: "Простая функция",
+                        description: "Напишите функцию, которая складывает два числа.",
+                        input: 'def add(a, b)',
+                        expected: 'add(2, 3) = 5',
+                        hint: "return a + b",
+                        solution: `def add(a, b):
+    return a + b
+
+print(add(2, 3))`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Факториал",
+                        description: "Напишите функцию, которая вычисляет факториал числа.",
+                        input: 'factorial(5)',
+                        expected: '120',
+                        hint: "Используйте рекурсию или цикл",
+                        solution: `def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "Декоратор",
+                        description: "Напишите простой декоратор, который выводит \"До\" и \"После\" для функции.",
+                        input: 'используйте @decorator',
+                        expected: 'До функции, После функции',
+                        hint: "def decorator(func): def wrapper(): ...",
+                        solution: `def my_decorator(func):
+    def wrapper():
+        print("До")
+        func()
+        print("После")
+    return wrapper
+
+@my_decorator
+def hello():
+    print("Привет!")`
+                    }
+                ]
+            },
+            math: {
+                easy: [
+                    {
+                        title: "Проверка чётности",
+                        description: "Проверьте, является ли число чётным.",
+                        input: 'number = 4',
+                        expected: 'True',
+                        hint: "number % 2 == 0",
+                        solution: `number = 4
+is_even = number % 2 == 0
+print(is_even)`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Простое число",
+                        description: "Проверьте, является ли число простым.",
+                        input: 'number = 7',
+                        expected: 'True',
+                        hint: "Проверяйте делимость на всё до корня",
+                        solution: `number = 7
+is_prime = number > 1
+for i in range(2, int(number ** 0.5) + 1):
+    if number % i == 0:
+        is_prime = False
+        break
+print(is_prime)`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "НОД (Наибольший общий делитель)",
+                        description: "Найдите НОД двух чисел.",
+                        input: 'a = 48, b = 18',
+                        expected: '6',
+                        hint: "Используйте алгоритм Евклида",
+                        solution: `def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+print(gcd(48, 18))`
+                    }
+                ]
+            },
+            algorithms: {
+                easy: [
+                    {
+                        title: "Линейный поиск",
+                        description: "Найдите позицию элемента в списке. Если его нет, верните -1.",
+                        input: 'arr = [1, 5, 9, 3], target = 9',
+                        expected: '2',
+                        hint: "Используйте цикл for с enumerate()",
+                        solution: `def linear_search(arr, target):
+    for i, val in enumerate(arr):
+        if val == target:
+            return i
+    return -1
+
+print(linear_search([1, 5, 9, 3], 9))`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Сортировка пузырьком",
+                        description: "Отсортируйте список используя алгоритм сортировки пузырьком.",
+                        input: 'arr = [64, 34, 25, 12, 22]',
+                        expected: '[12, 22, 25, 34, 64]',
+                        hint: "Проходите по списку несколько раз, сравнивая соседние элементы",
+                        solution: `def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+
+print(bubble_sort([64, 34, 25, 12, 22]))`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "Двоичный поиск",
+                        description: "Найдите элемент в отсортированном списке за O(log n) используя двоичный поиск.",
+                        input: 'arr = [2, 3, 4, 10, 40], target = 10',
+                        expected: '3',
+                        hint: "Делите диапазон пополам на каждой итерации",
+                        solution: `def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+print(binary_search([2, 3, 4, 10, 40], 10))`
+                    }
+                ]
+            },
+            dynamic: {
+                easy: [
+                    {
+                        title: "Числа Фибоначчи (мемоизация)",
+                        description: "Найдите n-е число Фибоначчи используя мемоизацию.",
+                        input: 'n = 10',
+                        expected: '55',
+                        hint: "Сохраняйте вычисленные значения в словаре",
+                        solution: `def fib(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        return n
+    memo[n] = fib(n-1, memo) + fib(n-2, memo)
+    return memo[n]
+
+print(fib(10))`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "Лестница (DP)",
+                        description: "Вы можете подняться на 1 или 2 ступеньки. Сколько способов подняться на n ступеней?",
+                        input: 'n = 5',
+                        expected: '8',
+                        hint: "dp[i] = dp[i-1] + dp[i-2]",
+                        solution: `def climb_stairs(n):
+    if n <= 2:
+        return n
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    dp[2] = 2
+    for i in range(3, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+    return dp[n]
+
+print(climb_stairs(5))`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "Рюкзак (0/1 Knapsack)",
+                        description: "У вас есть рюкзак вместимостью W и n предметов. Найдите максимальную стоимость.",
+                        input: 'weights=[2,3,4,5], values=[3,4,5,6], W=5',
+                        expected: '10',
+                        hint: "dp[i][w] = max(dp[i-1][w], values[i-1] + dp[i-1][w-weights[i-1]])",
+                        solution: `def knapsack(weights, values, W):
+    n = len(weights)
+    dp = [[0] * (W + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for w in range(W + 1):
+            if weights[i-1] <= w:
+                dp[i][w] = max(values[i-1] + dp[i-1][w-weights[i-1]], dp[i-1][w])
+            else:
+                dp[i][w] = dp[i-1][w]
+    return dp[n][W]
+
+print(knapsack([2,3,4,5], [3,4,5,6], 5))`
+                    }
+                ]
+            },
+            ege: {
+                easy: [
+                    {
+                        title: "ЕГЭ: Базовое преобразование чисел",
+                        description: "Переведите число из десятичной в двоичную систему.",
+                        input: 'number = 13',
+                        expected: '1101',
+                        hint: "Используйте bin() или делите на 2",
+                        solution: `number = 13
+binary = bin(number)[2:]  # Удаляет '0b' в начале
+print(binary)
+
+# Или вручную:
+binary = ""
+num = 13
+while num > 0:
+    binary = str(num % 2) + binary
+    num //= 2
+print(binary)`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "ЕГЭ: Подсчёт средней арифметической",
+                        description: "Найдите среднее арифметическое всех положительных элементов заданного списка.",
+                        input: 'arr = [-5, 3, 0, 8, -2, 6, 0]',
+                        expected: '5.666...',
+                        hint: "Отфильтруйте положительные числа и вычислите среднее",
+                        solution: `arr = [-5, 3, 0, 8, -2, 6, 0]
+positive = [x for x in arr if x > 0]
+average = sum(positive) / len(positive) if positive else 0
+print(f"{average:.2f}")`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "ЕГЭ: Анализ текста",
+                        description: "Найти количество слов в строке, которые начинаются с гласной.",
+                        input: 'text = \"Аппараты особой армии и ещё один\"',
+                        expected: '5',
+                        hint: "Разбейте на слова и проверьте первую букву",
+                        solution: `text = "Аппараты особой армии и ещё один"
+vowels = "аеёиоуяэюыiу"
+words = text.lower().split()
+count = sum(1 for word in words if word[0] in vowels)
+print(count)`
+                    }
+                ]
+            },
+            leetcode: {
+                easy: [
+                    {
+                        title: "LeetCode: Two Sum",
+                        description: "Найти два числа в массиве, которые в сумме дают target.",
+                        input: 'nums = [2,7,11,15], target = 9',
+                        expected: '[0, 1]',
+                        hint: "Используйте словарь для хранения индексов",
+                        solution: `def two_sum(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+    return []
+
+print(two_sum([2,7,11,15], 9))`
+                    }
+                ],
+                medium: [
+                    {
+                        title: "LeetCode: Container With Most Water",
+                        description: "Найдите два перпендикуляра, которые содержат максимум воды.",
+                        input: 'height = [1,8,6,2,5,4,8,3,7]',
+                        expected: '49',
+                        hint: "Используйте два указателя слева и справа",
+                        solution: `def max_area(height):
+    max_area = 0
+    left, right = 0, len(height) - 1
+    while left < right:
+        area = min(height[left], height[right]) * (right - left)
+        max_area = max(max_area, area)
+        if height[left] < height[right]:
+            left += 1
+        else:
+            right -= 1
+    return max_area
+
+print(max_area([1,8,6,2,5,4,8,3,7]))`
+                    }
+                ],
+                hard: [
+                    {
+                        title: "LeetCode: Median of Two Sorted Arrays",
+                        description: "Найти медиану двух отсортированных массивов размеров m и n.",
+                        input: 'nums1 = [1,3], nums2 = [2]',
+                        expected: '2.0',
+                        hint: "Объедините и отсортируйте или используйте двоичный поиск",
+                        solution: `def find_median_sorted_arrays(nums1, nums2):
+    merged = sorted(nums1 + nums2)
+    n = len(merged)
+    if n % 2 == 1:
+        return float(merged[n // 2])
+    else:
+        return (merged[n // 2 - 1] + merged[n // 2]) / 2.0
+
+print(find_median_sorted_arrays([1,3], [2]))`
+                    }
+                ]
+            }
+        };
+
+        const tips = [
+            "Сосредоточьтесь на понимании задачи перед написанием кода.",
+            "Разбивайте большие задачи на более маленькие части.",
+            "Тестируйте ваш код на примерах перед сдачей.",
+            "Используйте print() для отладки и проверки значений переменных.",
+            "Не забывайте про пробелы и форматирование кода.",
+            "Читайте описание ошибок - они часто подсказывают решение.",
+            "Практикуйте регулярно - это лучший способ улучшить навыки.",
+            "Не стыдитесь решений из интернета, но потом перепишите своим способом."
+        ];
+
+        let currentTask = null;
+        let stats = {
+            total: 0,
+            solved: 0
+        };
+
+        function loadStats() {
+            const saved = localStorage.getItem('taskStats');
+            if (saved) {
+                stats = JSON.parse(saved);
+                updateStatsDisplay();
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('taskStats', JSON.stringify(stats));
+            updateStatsDisplay();
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('taskCount').textContent = stats.total;
+            document.getElementById('solvedCount').textContent = stats.solved;
+            const rate = stats.total > 0 ? Math.round((stats.solved / stats.total) * 100) : 0;
+            document.getElementById('solveRate').textContent = rate + '%';
+        }
+
+        function generateTask() {
+            const category = document.getElementById('category').value;
+            const difficulty = document.getElementById('difficulty').value;
+            
+            const tasks = tasksDatabase[category][difficulty];
+            const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
+            
+            currentTask = randomTask;
+            stats.total++;
+            saveStats();
+            
+            displayTask(randomTask);
+        }
+
+        function displayTask(task) {
+            const display = document.getElementById('taskDisplay');
+            
+            const html = `
+                <div class="task-header">
+                    <h2 class="task-title">${task.title}</h2>
+                    <span class="task-difficulty difficulty-${document.getElementById('difficulty').value}">${document.getElementById('difficulty').options[document.getElementById('difficulty').selectedIndex].text}</span>
+                </div>
+                
+                <div class="task-content">
+                    <div class="task-section">
+                        <h4>📝 Описание:</h4>
+                        <p>${task.description}</p>
+                    </div>
+                    
+                    <div class="task-section">
+                        <h4>📥 Входные данные:</h4>
+                        <div class="task-example">${task.input}</div>
+                    </div>
+                    
+                    <div class="task-section">
+                        <h4>📤 Ожидаемый результат:</h4>
+                        <div class="task-example">${task.expected}</div>
+                    </div>
+                    
+                    <div class="task-section">
+                        <h4>💡 Подсказка:</h4>
+                        <p>${task.hint}</p>
+                    </div>
+                </div>
+                
+                <div class="task-actions">
+                    <button class="btn-copy" onclick="copySolution()">📋 Скопировать решение</button>
+                    <button class="btn-solve" onclick="markSolved()">✅ Я решил!</button>
+                </div>
+            `;
+            
+            display.innerHTML = html;
+        }
+
+        function copySolution() {
+            if (currentTask) {
+                const solution = currentTask.solution;
+                navigator.clipboard.writeText(solution).then(() => {
+                    alert('Решение скопировано в буфер обмена!');
+                });
+            }
+        }
+
+        function markSolved() {
+            if (currentTask) {
+                stats.solved++;
+                saveStats();
+                alert('Отлично! Задача отмечена как решённая.');
+                generateTask();
+            }
+        }
+
+        function clearTask() {
+            const display = document.getElementById('taskDisplay');
+            display.innerHTML = '<div class="no-task">👈 Выберите параметры и нажмите "Сгенерировать"</div>';
+            currentTask = null;
+        }
+
+        // Тема
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Меню
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Инициализация
+        window.addEventListener('load', () => {
+            // Загрузить сохранённую тему
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            loadStats();
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            document.getElementById('tipOfDay').textContent = randomTip;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Tools | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+    <style>
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .tool-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .tool-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .tool-content.active {
+            display: block;
+        }
+
+        .tool-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: "Fira Code", monospace;
+            font-size: 0.9rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            resize: vertical;
+            min-height: 150px;
+            margin-bottom: 10px;
+        }
+
+        .tool-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tool-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .tool-output {
+            background: var(--bg-secondary);
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 3px solid var(--accent-primary);
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: "Fira Code", monospace;
+            font-size: 0.85rem;
+        }
+
+        .close-btn {
+            display: inline-block;
+            background: var(--border-color);
+            color: var(--text-primary);
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+
+        .close-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link active">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="sections.html" class="nav-link">📚 Разделы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link active">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="sections.html" class="mobile-link">📚 Разделы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Герой-секция -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="highlight">Dev Tools</span>
+                <br>Полезные инструменты для разработчика
+            </h1>
+            <p class="hero-subtitle">Конвертеры, форматеры и генераторы кода для ускорения работы</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">🛠️ Инструменты</h2>
+                
+                <div class="tools-grid">
+                    <!-- JSON Formatter -->
+                    <div class="tool-card" onclick="openTool(event, 'json')">
+                        <div class="tool-icon">📋</div>
+                        <div class="tool-name">JSON Formatter</div>
+                        <div class="tool-description">Форматирование и валидация JSON кода</div>
+                        <div class="tool-content" id="json">
+                            <span class="close-btn" onclick="closeTool(event, 'json')">✕ Закрыть</span>
+                            <textarea class="tool-textarea" id="jsonInput" placeholder='Вставьте JSON здесь...'></textarea>
+                            <div class="tool-buttons">
+                                <button class="tool-btn btn-primary" onclick="formatJSON()">Форматировать</button>
+                                <button class="tool-btn btn-secondary" onclick="minifyJSON()">Минифицировать</button>
+                                <button class="tool-btn btn-secondary" onclick="clearTool('json')">Очистить</button>
+                            </div>
+                            <div class="tool-output" id="jsonOutput"></div>
+                        </div>
+                    </div>
+
+                    <!-- Base64 Converter -->
+                    <div class="tool-card" onclick="openTool(event, 'base64')">
+                        <div class="tool-icon">🔐</div>
+                        <div class="tool-name">Base64 Converter</div>
+                        <div class="tool-description">Кодирование и декодирование Base64</div>
+                        <div class="tool-content" id="base64">
+                            <span class="close-btn" onclick="closeTool(event, 'base64')">✕ Закрыть</span>
+                            <textarea class="tool-textarea" id="base64Input" placeholder='Вставьте текст или Base64 здесь...'></textarea>
+                            <div class="tool-buttons">
+                                <button class="tool-btn btn-primary" onclick="encodeBase64()">Кодировать</button>
+                                <button class="tool-btn btn-primary" onclick="decodeBase64()">Декодировать</button>
+                                <button class="tool-btn btn-secondary" onclick="clearTool('base64')">Очистить</button>
+                            </div>
+                            <div class="tool-output" id="base64Output"></div>
+                        </div>
+                    </div>
+
+                    <!-- MD5 Hash -->
+                    <div class="tool-card" onclick="openTool(event, 'hash')">
+                        <div class="tool-icon">🔑</div>
+                        <div class="tool-name">Hash Generator</div>
+                        <div class="tool-description">Генерация MD5 и SHA256 хешей</div>
+                        <div class="tool-content" id="hash">
+                            <span class="close-btn" onclick="closeTool(event, 'hash')">✕ Закрыть</span>
+                            <textarea class="tool-textarea" id="hashInput" placeholder='Введите текст для хеширования...'></textarea>
+                            <div class="tool-buttons">
+                                <button class="tool-btn btn-primary" onclick="generateMD5()">MD5</button>
+                                <button class="tool-btn btn-primary" onclick="generateSHA256()">SHA256</button>
+                                <button class="tool-btn btn-secondary" onclick="clearTool('hash')">Очистить</button>
+                            </div>
+                            <div class="tool-output" id="hashOutput"></div>
+                        </div>
+                    </div>
+
+                    <!-- URL Encoder -->
+                    <div class="tool-card" onclick="openTool(event, 'url')">
+                        <div class="tool-icon">🌐</div>
+                        <div class="tool-name">URL Encoder/Decoder</div>
+                        <div class="tool-description">Кодирование и декодирование URL</div>
+                        <div class="tool-content" id="url">
+                            <span class="close-btn" onclick="closeTool(event, 'url')">✕ Закрыть</span>
+                            <textarea class="tool-textarea" id="urlInput" placeholder='Вставьте URL или текст...'></textarea>
+                            <div class="tool-buttons">
+                                <button class="tool-btn btn-primary" onclick="encodeURL()">Кодировать</button>
+                                <button class="tool-btn btn-primary" onclick="decodeURL()">Декодировать</button>
+                                <button class="tool-btn btn-secondary" onclick="clearTool('url')">Очистить</button>
+                            </div>
+                            <div class="tool-output" id="urlOutput"></div>
+                        </div>
+                    </div>
+
+                    <!-- Text Stats -->
+                    <div class="tool-card" onclick="openTool(event, 'stats')">
+                        <div class="tool-icon">📊</div>
+                        <div class="tool-name">Text Statistics</div>
+                        <div class="tool-description">Анализ текста: символы, слова, строки</div>
+                        <div class="tool-content" id="stats">
+                            <span class="close-btn" onclick="closeTool(event, 'stats')">✕ Закрыть</span>
+                            <textarea class="tool-textarea" id="statsInput" placeholder='Вставьте текст для анализа...'></textarea>
+                            <button class="tool-btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="analyzeText()">Анализировать</button>
+                            <div class="tool-output" id="statsOutput"></div>
+                        </div>
+                    </div>
+
+                    <!-- Color Converter -->
+                    <div class="tool-card" onclick="openTool(event, 'color')">
+                        <div class="tool-icon">🎨</div>
+                        <div class="tool-name">Color Converter</div>
+                        <div class="tool-description">Конверсия цветов между форматами</div>
+                        <div class="tool-content" id="color">
+                            <span class="close-btn" onclick="closeTool(event, 'color')">✕ Закрыть</span>
+                            <input type="text" id="colorInput" class="tool-textarea" placeholder='Введите цвет (#FF5733 или rgb(255,87,51))' style="height: 40px; font-size: 1rem;">
+                            <div class="tool-buttons">
+                                <button class="tool-btn btn-primary" onclick="convertColor()">Конвертировать</button>
+                                <button class="tool-btn btn-secondary" onclick="clearTool('color')">Очистить</button>
+                            </div>
+                            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                <div style="flex: 1; padding: 15px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                                    <div id="colorPreview" style="width: 100%; height: 60px; background: #000; border-radius: 6px; margin-bottom: 10px;"></div>
+                                    <small>Предпросмотр</small>
+                                </div>
+                                <div style="flex: 1; padding: 15px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid var(--accent-primary);">
+                                    <div id="colorOutput" style="word-break: break-all; font-family: 'Fira Code', monospace; font-size: 0.85rem;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Совет дня -->
+        <section class="section" style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="about-card">
+                    <h3>💡 Совет</h3>
+                    <p>Эти инструменты помогут вам в повседневной разработке. Сохраняйте эту страницу в закладки для быстрого доступа!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4>PythonPath</h4>
+                <p>Ваш путь в мир Python программирования</p>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="dev-tools.html">Dev Tools</a></li>
+                    <li><a href="blog.html">Блог</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PythonPath. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openTool(e, toolId) {
+            if (e.target.classList.contains('close-btn')) return;
+            const toolContent = document.getElementById(toolId);
+            toolContent.classList.add('active');
+        }
+
+        function closeTool(e, toolId) {
+            e.stopPropagation();
+            const toolContent = document.getElementById(toolId);
+            toolContent.classList.remove('active');
+        }
+
+        function clearTool(toolId) {
+            if (toolId === 'json') {
+                document.getElementById('jsonInput').value = '';
+                document.getElementById('jsonOutput').textContent = '';
+            } else if (toolId === 'base64') {
+                document.getElementById('base64Input').value = '';
+                document.getElementById('base64Output').textContent = '';
+            } else if (toolId === 'hash') {
+                document.getElementById('hashInput').value = '';
+                document.getElementById('hashOutput').textContent = '';
+            } else if (toolId === 'url') {
+                document.getElementById('urlInput').value = '';
+                document.getElementById('urlOutput').textContent = '';
+            } else if (toolId === 'stats') {
+                document.getElementById('statsInput').value = '';
+                document.getElementById('statsOutput').textContent = '';
+            } else if (toolId === 'color') {
+                document.getElementById('colorInput').value = '';
+                document.getElementById('colorOutput').textContent = '';
+                document.getElementById('colorPreview').style.background = '#000';
+            }
+        }
+
+        // JSON Functions
+        function formatJSON() {
+            try {
+                const input = document.getElementById('jsonInput').value;
+                const parsed = JSON.parse(input);
+                const output = JSON.stringify(parsed, null, 2);
+                document.getElementById('jsonOutput').textContent = output;
+            } catch (e) {
+                document.getElementById('jsonOutput').textContent = '❌ Ошибка: ' + e.message;
+            }
+        }
+
+        function minifyJSON() {
+            try {
+                const input = document.getElementById('jsonInput').value;
+                const parsed = JSON.parse(input);
+                const output = JSON.stringify(parsed);
+                document.getElementById('jsonOutput').textContent = output;
+            } catch (e) {
+                document.getElementById('jsonOutput').textContent = '❌ Ошибка: ' + e.message;
+            }
+        }
+
+        // Base64 Functions
+        function encodeBase64() {
+            try {
+                const input = document.getElementById('base64Input').value;
+                const output = btoa(unescape(encodeURIComponent(input)));
+                document.getElementById('base64Output').textContent = output;
+            } catch (e) {
+                document.getElementById('base64Output').textContent = '❌ Ошибка: ' + e.message;
+            }
+        }
+
+        function decodeBase64() {
+            try {
+                const input = document.getElementById('base64Input').value;
+                const output = decodeURIComponent(escape(atob(input)));
+                document.getElementById('base64Output').textContent = output;
+            } catch (e) {
+                document.getElementById('base64Output').textContent = '❌ Ошибка: ' + e.message;
+            }
+        }
+
+        // Simple MD5 (in real use, use a library)
+        function generateMD5() {
+            alert('Для полной поддержки MD5 используйте библиотеку. Пример использования CryptoJS в реальном проекте.');
+        }
+
+        function generateSHA256() {
+            alert('Для полной поддержки SHA256 используйте библиотеку. Пример использования CryptoJS в реальном проекте.');
+        }
+
+        // URL Functions
+        function encodeURL() {
+            const input = document.getElementById('urlInput').value;
+            const output = encodeURIComponent(input);
+            document.getElementById('urlOutput').textContent = output;
+        }
+
+        function decodeURL() {
+            try {
+                const input = document.getElementById('urlInput').value;
+                const output = decodeURIComponent(input);
+                document.getElementById('urlOutput').textContent = output;
+            } catch (e) {
+                document.getElementById('urlOutput').textContent = '❌ Ошибка: ' + e.message;
+            }
+        }
+
+        // Text Statistics
+        function analyzeText() {
+            const input = document.getElementById('statsInput').value;
+            const chars = input.length;
+            const charsNoSpaces = input.replace(/\s/g, '').length;
+            const words = input.trim().split(/\s+/).filter(w => w).length;
+            const lines = input.split('\n').length;
+            const avgWordLength = words > 0 ? (charsNoSpaces / words).toFixed(2) : 0;
+            
+            const stats = `
+📊 Статистика текста:
+━━━━━━━━━━━━━━━━━
+📝 Символов: ${chars}
+🔤 Символов без пробелов: ${charsNoSpaces}
+💬 Слов: ${words}
+📄 Строк: ${lines}
+📏 Средняя длина слова: ${avgWordLength}
+            `.trim();
+            
+            document.getElementById('statsOutput').textContent = stats;
+        }
+
+        // Color Converter
+        function convertColor() {
+            try {
+                const input = document.getElementById('colorInput').value.trim();
+                let rgb, hex;
+                
+                if (input.startsWith('#')) {
+                    hex = input;
+                    rgb = hexToRgb(input);
+                } else if (input.startsWith('rgb')) {
+                    rgb = input;
+                    hex = rgbToHex(input);
+                } else {
+                    throw new Error('Неверный формат цвета');
+                }
+                
+                document.getElementById('colorPreview').style.background = input;
+                document.getElementById('colorOutput').textContent = `HEX: ${hex}\nRGB: ${rgb}`;
+            } catch (e) {
+                document.getElementById('colorOutput').textContent = '❌ Ошибка: ' + e.message;
+            }
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
+        }
+
+        function rgbToHex(rgb) {
+            const match = rgb.match(/\d+/g);
+            if (!match || match.length !== 3) return null;
+            const hex = (x) => ('0' + parseInt(x).toString(16)).slice(-2);
+            return `#${hex(match[0])}${hex(match[1])}${hex(match[2])}`.toUpperCase();
+        }
+
+        // Тема
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Меню
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Инициализация
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+    </script>
+</body>
+</html>

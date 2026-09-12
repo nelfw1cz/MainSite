@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">⚙️ Админ-панель</h1>
+            <p class="page-subtitle">Управление задачами и контентом сайта</p>
+        </div>
+    </section>
+
+    <!-- Проверка доступа -->
+    <section class="admin-access-section">
+        <div class="container">
+            <!-- Сообщение для неавторизованных -->
+            <div class="access-denied" id="accessDenied">
+                <div class="access-icon">🔒</div>
+                <h2>Доступ запрещён</h2>
+                <p>Только авторизованные пользователи могут управлять задачами.</p>
+                <button class="btn btn-primary" id="loginToAdmin">Войти</button>
+            </div>
+
+            <!-- Контент для авторизованных -->
+            <div class="admin-content hidden" id="adminContent">
+                <!-- Вкладки -->
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="add-task">➕ Добавить задачу</button>
+                    <button class="admin-tab" data-tab="manage-tasks">📋 Управление задачами</button>
+                    <button class="admin-tab" data-tab="settings">⚙️ Настройки</button>
+                </div>
+
+                <!-- Добавление задачи -->
+                <div class="admin-panel active" id="addTaskPanel">
+                    <div class="admin-card">
+                        <h3>Новая задача</h3>
+                        <form id="addTaskForm" class="admin-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="taskTitle">Название задачи *</label>
+                                    <input type="text" id="taskTitle" required placeholder="Например: Сумма цифр числа">
+                                </div>
+                                <div class="form-group">
+                                    <label for="taskDifficulty">Сложность *</label>
+                                    <select id="taskDifficulty" required>
+                                        <option value="easy">Лёгкая</option>
+                                        <option value="medium">Средняя</option>
+                                        <option value="hard">Сложная</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskPreview">Краткое описание *</label>
+                                <textarea id="taskPreview" rows="2" required placeholder="Описание задачи для превью..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskTags">Теги (через запятую)</label>
+                                <input type="text" id="taskTags" placeholder="циклы, математика, функции">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Скриншот условия</label>
+                                <div class="file-upload">
+                                    <input type="file" id="taskScreenshot" accept="image/*" hidden>
+                                    <label for="taskScreenshot" class="file-upload-label">
+                                        <span class="upload-icon">📷</span>
+                                        <span>Выберите изображение</span>
+                                        <small>PNG, JPG, GIF до 5MB</small>
+                                    </label>
+                                    <div class="file-preview" id="screenshotPreview"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskCode">Код решения на Python *</label>
+                                <div class="code-editor-wrapper">
+                                    <button type="button" class="format-code-btn" id="formatCodeBtn">📝 Форматировать</button>
+                                    <textarea id="taskCode" rows="15" required placeholder="# Ваш код на Python..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskExplanation">Объяснение решения</label>
+                                <textarea id="taskExplanation" rows="4" placeholder="Подробное объяснение решения..."></textarea>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">💾 Сохранить задачу</button>
+                                <button type="reset" class="btn btn-secondary">🗑️ Очистить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Управление задачами -->
+                <div class="admin-panel" id="manageTasksPanel">
+                    <div class="admin-card">
+                        <h3>Все задачи</h3>
+                        <div class="tasks-admin-header">
+                            <div class="search-box">
+                                <input type="text" id="adminTaskSearch" placeholder="Поиск задач...">
+                                <span class="search-icon">🔍</span>
+                            </div>
+                            <div class="tasks-count">
+                                Всего: <span id="totalTasksCount">0</span>
+                            </div>
+                        </div>
+                        <div class="tasks-admin-list" id="tasksAdminList">
+                            <!-- Задачи будут загружены через JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Настройки -->
+                <div class="admin-panel" id="settingsPanel">
+                    <div class="admin-card">
+                        <h3>Настройки админ-панели</h3>
+                        
+                        <div class="settings-group">
+                            <h4>📤 Экспорт данных</h4>
+                            <p>Скачайте все задачи в формате JSON для резервного копирования.</p>
+                            <button class="btn btn-secondary" id="exportTasksBtn">📥 Скачать задачи</button>
+                        </div>
+
+                        <div class="settings-group">
+                            <h4>📥 Импорт данных</h4>
+                            <p>Загрузите задачи из JSON файла.</p>
+                            <div class="file-upload">
+                                <input type="file" id="importTasksFile" accept=".json" hidden>
+                                <label for="importTasksFile" class="file-upload-label">
+                                    <span class="upload-icon">📁</span>
+                                    <span>Выберите JSON файл</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h4>⚠️ Опасная зона</h4>
+                            <p>Удалить все задачи без возможности восстановления.</p>
+                            <button class="btn btn-danger" id="deleteAllTasksBtn">🗑️ Удалить все задачи</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно подтверждения -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal confirm-modal">
+            <h3 id="confirmTitle">Подтверждение</h3>
+            <p id="confirmMessage">Вы уверены?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-secondary" id="confirmCancel">Отмена</button>
+                <button class="btn btn-danger" id="confirmOk">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования -->
+    <div class="modal-overlay" id="editTaskModal">
+        <div class="modal edit-task-modal">
+            <button class="modal-close" id="editModalClose">&times;</button>
+            <h3>Редактировать задачу</h3>
+            <form id="editTaskForm" class="admin-form">
+                <input type="hidden" id="editTaskId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editTaskTitle">Название</label>
+                        <input type="text" id="editTaskTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editTaskDifficulty">Сложность</label>
+                        <select id="editTaskDifficulty" required>
+                            <option value="easy">Лёгкая</option>
+                            <option value="medium">Средняя</option>
+                            <option value="hard">Сложная</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editTaskPreview">Описание</label>
+                    <textarea id="editTaskPreview" rows="2" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editTaskTags">Теги</label>
+                    <input type="text" id="editTaskTags">
+                </div>
+                <div class="form-group">
+                    <label for="editTaskCode">Код</label>
+                    <textarea id="editTaskCode" rows="12" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editTaskExplanation">Объяснение</label>
+                    <textarea id="editTaskExplanation" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="progress.html">Прогресс</a></li>
+                        <li><a href="about.html">О себе</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="contacts.html">Связаться со мной</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Telegram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

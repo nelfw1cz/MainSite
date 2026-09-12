@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+    <style>
+        .game-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px var(--shadow-color);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-title {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .game-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .game-content {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            color: #00ff00;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background: var(--border-color);
+            border: 2px solid transparent;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        .option:hover {
+            border-color: var(--accent-primary);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .option.correct {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .option.incorrect {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #dc2626;
+            border-left: 4px solid #ef4444;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .game-over {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .difficulty-select {
+            margin-bottom: 20px;
+        }
+
+        .difficulty-select label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .difficulty-select select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="sections.html" class="nav-link">📚 Разделы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="sections.html" class="mobile-link">📚 Разделы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Герой-секция -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="highlight">🎮 Python квиз</span>
+                <br>Проверь свои знания в увлекательной форме
+            </h1>
+            <p class="hero-subtitle">Отвечай на вопросы и повышай свой уровень</p>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <section class="section">
+            <div class="game-container">
+                <div id="startScreen">
+                    <div class="game-header">
+                        <div class="game-title">🎮 Python Квиз</div>
+                    </div>
+                    <div class="difficulty-select">
+                        <label for="difficulty">Выберите сложность:</label>
+                        <select id="difficulty">
+                            <option value="easy">🟢 Лёгкая (базовые концепции)</option>
+                            <option value="medium">🟡 Средняя (практика)</option>
+                            <option value="hard">🔴 Сложная (продвинутый уровень)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; padding: 15px;" onclick="startGame()">
+                        Начать игру
+                    </button>
+                </div>
+
+                <div id="gameScreen" style="display: none;">
+                    <div class="game-stats">
+                        <div class="stat-box">
+                            <div class="stat-label">Вопрос</div>
+                            <div class="stat-value"><span id="currentQ">1</span>/<span id="totalQ">0</span></div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Правильных</div>
+                            <div class="stat-value" id="correctCount">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Прогресс</div>
+                            <div class="stat-value"><span id="percentage">0</span>%</div>
+                        </div>
+                    </div>
+
+                    <div class="game-content">
+                        <div class="question-text" id="question"></div>
+                        <div class="code-block" id="codeBlock" style="display: none;"></div>
+                        <div class="feedback" id="feedback"></div>
+                        <div class="options" id="optionsContainer"></div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="skipQuestion()">Пропустить</button>
+                        <button class="btn btn-primary" id="submitBtn" onclick="checkAnswer()" disabled>Ответить</button>
+                    </div>
+                </div>
+
+                <div id="endScreen" style="display: none;">
+                    <div class="game-over">
+                        <h2>Спасибо за игру!</h2>
+                        <div class="score-circle" id="finalScore"></div>
+                        <h3 id="resultText"></h3>
+                        <button class="btn btn-primary" style="margin-top: 20px;" onclick="backToStart()">
+                            Играть снова
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4>PythonPath</h4>
+                <p>Ваш путь в мир Python программирования</p>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="blog.html">Блог</a></li>
+                    <li><a href="dev-tools.html">Dev Tools</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PythonPath. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        const questions = {
+            easy: [
+                {
+                    question: "Какой результат выполнения кода?",
+                    code: "print(2 + 2 * 2)",
+                    options: ["6", "8", "4", "10"],
+                    correct: 0
+                },
+                {
+                    question: "Какой тип данных будет x?",
+                    code: "x = '123'",
+                    options: ["int", "str", "float", "bool"],
+                    correct: 1
+                },
+                {
+                    question: "Какой результат?",
+                    code: "print(len('Hello'))",
+                    options: ["4", "5", "6", "7"],
+                    correct: 1
+                },
+                {
+                    question: "Что вернёт?",
+                    code: "print([1, 2, 3][1])",
+                    options: ["1", "2", "3", "IndexError"],
+                    correct: 1
+                }
+            ],
+            medium: [
+                {
+                    question: "Какой результат?",
+                    code: "x = [1, 2, 3]\nx.append(4)\nprint(len(x))",
+                    options: ["3", "4", "5", "0"],
+                    correct: 1
+                },
+                {
+                    question: "Что выведет?",
+                    code: "def test():\n    return 'Hello'\nprint(test())",
+                    options: ["test()", "Hello", "None", "Error"],
+                    correct: 1
+                },
+                {
+                    question: "Результат?",
+                    code: "x = {'a': 1, 'b': 2}\nprint(x.get('c', 'not found'))",
+                    options: ["KeyError", "None", "not found", "'c'"],
+                    correct: 2
+                }
+            ],
+            hard: [
+                {
+                    question: "Что выведет?",
+                    code: "x = [i**2 for i in range(4)]\nprint(x)",
+                    options: ["[0, 1, 2, 3]", "[0, 1, 4, 9]", "[1, 4, 9, 16]", "[4, 8, 12, 16]"],
+                    correct: 1
+                },
+                {
+                    question: "Результат?",
+                    code: "def f(a, b=2):\n    return a * b\nprint(f(5))",
+                    options: ["5", "10", "7", "Error"],
+                    correct: 1
+                },
+                {
+                    question: "Тип переменной?",
+                    code: "x = (1,)\nprint(type(x))",
+                    options: ["int", "list", "tuple", "set"],
+                    correct: 2
+                }
+            ]
+        };
+
+        let currentQuestions = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let difficulty = 'easy';
+
+        function startGame() {
+            difficulty = document.getElementById('difficulty').value;
+            currentQuestions = [...questions[difficulty]];
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('gameScreen').style.display = 'block';
+            document.getElementById('totalQ').textContent = currentQuestions.length;
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= currentQuestions.length) {
+                endGame();
+                return;
+            }
+
+            const q = currentQuestions[currentQuestion];
+            selectedAnswer = null;
+
+            document.getElementById('question').textContent = q.question;
+            if (q.code) {
+                document.getElementById('codeBlock').textContent = q.code;
+                document.getElementById('codeBlock').style.display = 'block';
+            } else {
+                document.getElementById('codeBlock').style.display = 'none';
+            }
+
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
+            document.getElementById('submitBtn').disabled = true;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = q.options.map((opt, idx) => `
+                <div class="option" onclick="selectAnswer(${idx})">${opt}</div>
+            `).join('');
+        }
+
+        function selectAnswer(idx) {
+            selectedAnswer = idx;
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === idx);
+            });
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function checkAnswer() {
+            if (selectedAnswer === null) return;
+
+            const q = currentQuestions[currentQuestion];
+            const isCorrect = selectedAnswer === q.correct;
+
+            document.querySelectorAll('.option').forEach((opt, idx) => {
+                if (idx === q.correct) {
+                    opt.classList.add('correct');
+                } else if (idx === selectedAnswer && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+                opt.style.pointerEvents = 'none';
+            });
+
+            if (isCorrect) {
+                score++;
+                document.getElementById('feedback').textContent = '✅ Правильно!';
+                document.getElementById('feedback').classList.add('show', 'correct');
+            } else {
+                document.getElementById('feedback').textContent = '❌ Неправильно!';
+                document.getElementById('feedback').classList.add('show', 'incorrect');
+            }
+
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('percentage').textContent = Math.round((score / (currentQuestion + 1)) * 100);
+            document.getElementById('submitBtn').disabled = true;
+
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 1500);
+        }
+
+        function skipQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('endScreen').style.display = 'block';
+
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            document.getElementById('finalScore').textContent = percentage + '%';
+
+            let message = '';
+            if (percentage === 100) {
+                message = '🏆 Отлично! Ты мастер Python!';
+            } else if (percentage >= 80) {
+                message = '⭐ Очень хорошо!';
+            } else if (percentage >= 60) {
+                message = '✅ Неплохо! Продолжай практиковаться';
+            } else {
+                message = '📚 Ещё есть, что учить!';
+            }
+            document.getElementById('resultText').textContent = `${message}\nЧисло правильных: ${score}/${currentQuestions.length}`;
+        }
+
+        function backToStart() {
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('endScreen').style.display = 'none';
+        }
+
+        // Тема
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Меню
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Инициализация
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+    </script>
+</body>
+</html>

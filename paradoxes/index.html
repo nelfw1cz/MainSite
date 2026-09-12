@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Парадоксы | PythonPath</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('darkMode', isDark);
+      updateIconDisplay();
+    }
+    function updateIconDisplay() {
+      const isDark = document.body.classList.contains('dark');
+      const sunIcon = document.getElementById('sunIcon');
+      const moonIcon = document.getElementById('moonIcon');
+      if (sunIcon && moonIcon) {
+        sunIcon.style.display = isDark ? 'none' : 'block';
+        moonIcon.style.display = isDark ? 'block' : 'none';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark');
+      }
+      updateIconDisplay();
+      lucide.createIcons();
+    });
+  </script>
+</head>
+<body class="transition-colors duration-300 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700">
+    <nav class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <a href="../index.html" class="text-xl font-bold text-blue-700 dark:text-blue-300 hover:text-blue-800 transition">← Назад на главную</a>
+          <h1 class="text-xl font-bold text-blue-600 dark:text-blue-300">Парадоксы и логика</h1>
+        </div>
+        <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-700 transition">
+          <i data-lucide="sun" id="sunIcon" class="w-5 h-5"></i>
+          <i data-lucide="moon" id="moonIcon" class="w-5 h-5" style="display:none;"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="min-h-screen pt-24 pb-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <!-- Introduction Section -->
+      <section class="mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-blue-700 dark:text-blue-300">Добро пожаловать в мир парадоксов</h2>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Здесь вы найдёте всё о философских и логических парадоксах, их применении в программировании и интерактивные разделы для обучения.</p>
+      </section>
+
+      <!-- Navigation Cards -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <a href="cheatsheet.html" class="group bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-600 transition">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition">
+              <i data-lucide="book" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-blue-700 dark:text-blue-300">📋 Чит-лист</h3>
+          </div>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">Быстрая справка по основным типам парадоксов с примерами и объяснениями</p>
+          <span class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:text-blue-700 dark:group-hover:text-blue-300">Открыть справку →</span>
+        </a>
+
+        <a href="quiz.html" class="group bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-purple-300 dark:hover:border-purple-600 transition">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition">
+              <i data-lucide="brain" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-purple-700 dark:text-purple-300">🎯 Интерактивный квиз</h3>
+          </div>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">Проверьте свои знания с помощью увлекательного теста с подробным результатом</p>
+          <span class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:text-blue-700 dark:group-hover:text-blue-300">Начать квиз →</span>
+        </a>
+
+        <a href="../paradoxes-in-programming.html" class="group bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-green-300 dark:hover:border-green-600 transition">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-800/50 transition">
+              <i data-lucide="code" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-green-700 dark:text-green-300">⚡ Парадоксы в коде</h3>
+          </div>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">Изучите, как парадоксы проявляются в программировании на Python</p>
+          <span class="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:text-blue-700 dark:group-hover:text-blue-300">Изучить примеры →</span>
+        </a>
+      </div>
+
+      <!-- Information Section -->
+      <section class="bg-white dark:bg-gray-800 rounded-xl p-8 border border-gray-200 dark:border-gray-700 mb-12">
+        <h3 class="text-2xl font-bold mb-6 text-blue-700 dark:text-blue-300">Что такое парадокс?</h3>
+        
+        <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+          <strong>Парадокс</strong> — это утверждение или ситуация, которые содержат в себе логическое противоречие. Он кажется истинным, но при ближайшем рассмотрении приводит к противоречивым результатам.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6 mt-6 mb-6">
+          <div class="pl-4 border-l-4 border-blue-500 bg-blue-50/50 dark:bg-blue-900/20 py-4 rounded-r">
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">🤔 Классический пример: Парадокс Лжеца</h4>
+            <p class="text-sm text-gray-700 dark:text-gray-300">"Это предложение ложно" — если оно правда, то оно ложно; если оно ложно, то оно правда. Логически неразрешимая ситуация!</p>
+          </div>
+
+          <div class="pl-4 border-l-4 border-green-500 bg-green-50/50 dark:bg-green-900/20 py-4 rounded-r">
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">📚 Основные типы парадоксов</h4>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Логические (Рассела), семантические (Сория), физические (Зенона) и философские (деда).</p>
+          </div>
+        </div>
+
+        <div class="mt-6 p-6 bg-yellow-50/50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+          <div class="flex items-start space-x-3">
+            <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5"></i>
+            <div>
+              <p class="font-semibold text-yellow-900 dark:text-yellow-100 mb-1">💡 Почему это важно для программиста?</p>
+              <p class="text-sm text-yellow-800 dark:text-yellow-200">Понимание парадоксов помогает избежать логических ошибок, бесконечных циклов и рекурсии. Многие баги возникают именно из парадоксальных ситуаций в коде!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Facts -->
+      <section>
+        <h3 class="text-2xl font-bold mb-6 text-blue-700 dark:text-blue-300">Интересные факты о парадоксах</h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="p-4 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
+            <p class="text-sm text-gray-700 dark:text-gray-300"><strong>Амбарцумян Виктор Амазасович</strong> доказал, что парадокс Лжеца разрешим в трёхзначной логике.</p>
+          </div>
+          <div class="p-4 bg-pink-50/50 dark:bg-pink-900/20 rounded-lg border border-pink-200 dark:border-pink-800">
+            <p class="text-sm text-gray-700 dark:text-gray-300"><strong>Парадокс Рассела</strong> помог пересмотреть основы теории множеств и логики в начале XX века.</p>
+          </div>
+          <div class="p-4 bg-cyan-50/50 dark:bg-cyan-900/20 rounded-lg border border-cyan-200 dark:border-cyan-800">
+            <p class="text-sm text-gray-700 dark:text-gray-300"><strong>Парадокс Ахилла и черепахи</strong> Зенона задал вопрос о бесконечной делимости пространства и времени.</p>
+          </div>
+          <div class="p-4 bg-orange-50/50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+            <p class="text-sm text-gray-700 dark:text-gray-300"><strong>В программировании</strong> парадоксы вызывают stack overflow, infinite loops и логические ошибки.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

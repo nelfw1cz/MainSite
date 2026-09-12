@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Прогулка по лесу | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header game-header">
+        <div class="container">
+            <h1 class="page-title">🌲 Прогулка по лесу 🌲</h1>
+            <p class="page-subtitle">Исследуй лес, находи интересные места и объекты</p>
+        </div>
+    </section>
+
+    <!-- Игра -->
+    <section class="game-section">
+        <div class="container">
+            <div class="game-wrapper">
+                <div class="game-container">
+                    <div class="game-area" id="gameArea">
+                        <!-- Лес генерируется здесь -->
+                    </div>
+
+                    <div class="info-panel">
+                        <div class="stat">
+                            <span class="stat-label">📍 Позиция:</span>
+                            <span id="position">0:0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">👣 Шагов:</span>
+                            <span id="steps">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">🌟 Найдено объектов:</span>
+                            <span id="found">0</span>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <p class="controls-title">Управление:</p>
+                        <div class="keys">
+                            <div class="key-row">
+                                <div class="key empty"></div>
+                                <div class="key" id="btnUp">↑</div>
+                                <div class="key empty"></div>
+                            </div>
+                            <div class="key-row">
+                                <div class="key" id="btnLeft">←</div>
+                                <div class="key" id="btnDown">↓</div>
+                                <div class="key" id="btnRight">→</div>
+                            </div>
+                        </div>
+                        <p class="controls-hint">или используйте клавиши WASD / стрелки</p>
+                    </div>
+
+                    <div class="message-area" id="messageArea"></div>
+
+                    <div class="game-actions">
+                        <button class="btn btn-secondary" id="restartBtn">🔄 Начать заново</button>
+                        <button class="btn btn-outline" id="changeSizeBtn">📏 Изменить размер</button>
+                    </div>
+                </div>
+
+                <!-- Боковая панель с информацией -->
+                <div class="game-sidebar">
+                    <div class="sidebar-card">
+                        <h3>🎯 Цель игры</h3>
+                        <p>Исследуйте лес, открывайте новые клетки и находите интересные объекты: деревья, цветы, камни и водоёмы.</p>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3>📊 Статистика</h3>
+                        <div class="game-stats-list">
+                            <div class="stat-item">
+                                <span class="stat-icon">🗺️</span>
+                                <span>Размер поля:</span>
+                                <span id="fieldSize">15x15</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🌲</span>
+                                <span>Деревьев:</span>
+                                <span id="treeCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🌸</span>
+                                <span>Цветов:</span>
+                                <span id="flowerCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🪨</span>
+                                <span>Камней:</span>
+                                <span id="stoneCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">💧</span>
+                                <span>Водоёмов:</span>
+                                <span id="waterCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🛤️</span>
+                                <span>Тропинок:</span>
+                                <span id="pathCount">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3>🎮 Как играть</h3>
+                        <ul class="how-to-play">
+                            <li>Используйте <strong>стрелки</strong> или <strong>WASD</strong> для перемещения</li>
+                            <li>Нажимайте на <strong>соседние клетки</strong> для движения</li>
+                            <li>Избегайте <strong>воды</strong> - через неё нельзя пройти</li>
+                            <li>Открывайте <strong>новые области</strong> леса</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3>🏆 Рекорды</h3>
+                        <div class="records-list">
+                            <div class="record-item">
+                                <span>Лучший счёт:</span>
+                                <span id="bestScore" class="record-value">0</span>
+                            </div>
+                            <div class="record-item">
+                                <span>Всего игр:</span>
+                                <span id="gamesPlayed" class="record-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="progress.html">Прогресс</a></li>
+                        <li><a href="about.html">О себе</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="contacts.html">Связаться со мной</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Telegram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

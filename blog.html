@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Блог | PythonPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PythonPath</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dev-tools.html" class="nav-link">🛠️ Dev Tools</a></li>
+                <li><a href="blog.html" class="nav-link active">📝 Блог</a></li>
+                <li><a href="resources.html" class="nav-link">📚 Ресурсы</a></li>
+                <li><a href="sections.html" class="nav-link">📚 Разделы</a></li>
+                <li><a href="ai-assistant.html" class="nav-link">🤖 AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" id="authBtn">Войти</button>
+                <div class="user-menu hidden" id="userMenu">
+                    <span class="username" id="usernameDisplay">User</span>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-link">Главная</a>
+        <a href="dev-tools.html" class="mobile-link">🛠️ Dev Tools</a>
+        <a href="blog.html" class="mobile-link active">📝 Блог</a>
+        <a href="resources.html" class="mobile-link">📚 Ресурсы</a>
+        <a href="sections.html" class="mobile-link">📚 Разделы</a>
+        <a href="ai-assistant.html" class="mobile-link">🤖 AI</a>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">📝 Мой блог</h1>
+            <p class="page-subtitle">Заметки о изучении Python, конспекты и размышления</p>
+        </div>
+    </section>
+
+    <!-- Поиск и фильтры -->
+    <section class="blog-filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="search-box">
+                    <input type="text" id="blogSearch" placeholder="Поиск статей...">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="python">Python</button>
+                    <button class="filter-btn" data-filter="algorithms">Алгоритмы</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="tips">Советы</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Список статей -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-grid" id="blogGrid">
+                <!-- Статьи будут загружены через JS -->
+            </div>
+            
+            <!-- Кнопка добавления для авторизованных -->
+            <div class="blog-actions" id="blogActions">
+                <button class="btn btn-primary" id="addPostBtn">➕ Написать статью</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно чтения статьи -->
+    <div class="modal-overlay" id="readModal">
+        <div class="modal blog-modal">
+            <button class="modal-close" id="readModalClose">&times;</button>
+            <article class="blog-article">
+                <header class="article-header">
+                    <span class="article-category" id="articleCategory">Python</span>
+                    <h2 id="articleTitle">Заголовок статьи</h2>
+                    <div class="article-meta">
+                        <span class="article-author" id="articleAuthor">👤 Автор</span>
+                        <span class="article-date" id="articleDate">01.01.2026</span>
+                        <span class="article-views" id="articleViews">👁️ 0</span>
+                    </div>
+                </header>
+                <div class="article-content" id="articleContent">
+                    <!-- Содержимое статьи -->
+                </div>
+                <footer class="article-footer">
+                    <div class="article-tags" id="articleTags"></div>
+                    <div class="article-reactions">
+                        <button class="reaction-btn" id="likeBtn">👍 <span id="likeCount">0</span></button>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления/редактирования -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal blog-edit-modal">
+            <button class="modal-close" id="editModalClose">&times;</button>
+            <h3 id="editModalTitle">Новая статья</h3>
+            <form id="blogForm" class="blog-form">
+                <input type="hidden" id="editPostId">
+                <div class="form-group">
+                    <label for="postTitle">Заголовок *</label>
+                    <input type="text" id="postTitle" required placeholder="Введите заголовок статьи">
+                </div>
+                <div class="form-group">
+                    <label for="postCategory">Категория *</label>
+                    <select id="postCategory" required>
+                        <option value="python">Python</option>
+                        <option value="algorithms">Алгоритмы</option>
+                        <option value="web">Web</option>
+                        <option value="tips">Советы</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="postTags">Теги (через запятую)</label>
+                    <input type="text" id="postTags" placeholder="python, beginner, tutorial">
+                </div>
+                <div class="form-group">
+                    <label for="postContent">Содержимое *</label>
+                    <textarea id="postContent" rows="15" required placeholder="Напишите вашу статью..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">💾 Опубликовать</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PythonPath</h3>
+                    <p>Мой путь в программировании</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="tasks.html">Задачи</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="quiz.html">Квиз</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="guestbook.html">Гостевая книга</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Telegram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Темы</h4>
+                    <div class="footer-themes">
+                        <button class="theme-dot" data-theme="light"></button>
+                        <button class="theme-dot" data-theme="dark"></button>
+                        <button class="theme-dot" data-theme="blue"></button>
+                        <button class="theme-dot" data-theme="green"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PythonPath. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="blog.js"></script>
+</body>
+</html>
